@@ -1,0 +1,88 @@
+article {
+    p,
+    ul,
+    ol,
+    blockquote,
+    pre {
+        margin-bottom: .8rem;
+    }
+    
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    code {
+        background-color: #e2e8f0;
+    }
+    
+    pre {
+        --highlighted: #f3f4f6;
+        --deleted: #fee2e2;
+        --deleted-text: #dc2626;
+        --added: #dcfce7;
+        --added-text: #059669;
+        --warning: #ffedd5;
+
+        border-width: 1px !important;
+        border-radius: .5rem;
+        padding: 1.25rem 0;
+        position: relative;
+
+        code {
+            background-color: transparent;
+        }
+
+        &:not(.shiki) {
+            padding: 1.25rem;
+        }
+
+        .line {
+            display: block;
+            height: 1.5em;
+            min-width: 100%;
+            padding: 0 1.25rem;
+
+            &.highlighted {
+                background-color: var(--highlighted);
+
+                &.error {
+                    --highlighted: var(--deleted);
+                }
+
+                &.warning {
+                    --highlighted: var(--warning);
+                }
+            }
+
+            &.diff.remove {
+                background-color: var(--deleted);
+                opacity: .7;
+
+                &::before {
+                    content: "-";
+                    color: var(--deleted-text);
+                }
+            }
+
+            &.diff.add {
+                background-color: var(--added);
+
+                &::before {
+                    content: "+";
+                    color: var(--added-text);
+                }
+            }
+
+            &.diff::before {
+                position: absolute;
+                left: .5rem;
+            }
+        }
+    }
+}

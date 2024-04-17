@@ -14,13 +14,68 @@ Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit number
 
 Jekyll also offers powerful support for code snippets:
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+```php
+namespace App\Entity;
+
+use ApiPlatform\Metadata\ApiResource; // [!code highlight:2]
+use ApiPlatform\Metadata\Delete;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(processor: UserPasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
+        new Get(
+            uriTemplate: '/users/me', // [!code error]
+            security: "is_granted('ROLE_USER') and object == user", // [!code warning]
+            provider: CurrentUserProvider::class,
+            openapi: new Operation(
+                summary: 'Retrieves the current user',
+            )
+        ),
+        new Get(), // [!code --]
+        new Put(processor: UserPasswordHasher::class), // [!code ++]
+        new Patch(processor: UserPasswordHasher::class),
+        new Delete(),
+    ],
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:create', 'user:update']],
+)]
+class User extends Manager implements UserInterface, PasswordAuthenticatedUserInterface, OAuthAwareUserProviderInterface
+{
+    #[Groups(['user:read'])]
+    private ?int $id;
+
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
+    #[ORM\Column(length: 254)]
+    private ?string $email = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    public function __construct()
+    {
+        $this->memberships = new ArrayCollection();
+        Test(name: 'test');
+    }
+
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface {
+        $this->setEmail($response->getEmail());
+        $this->setFirstname($response->getFirstName());
+        $this->setLastname($response->getLastName());
+        $this->setAvatar($response->getProfilePicture());
+        $this->setGoogleId($response->getUserIdentifier());
+
+        return $this;
+    }
+}
+```
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 

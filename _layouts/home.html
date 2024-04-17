@@ -1,20 +1,9 @@
 ---
     layout: default
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    <title>d9beuD's blog</title>
-</head>
-<body>
-    {% include navbar.html %}
-    <main class="container mx-auto px-4">
-        {{ content }}
-    </main>
-    {% include footer.html %}
-    <script src="/assets/scripts/navbar.js"></script>
-</body>
-</html>
+{% include navbar.html %}
+<main class="container mx-auto px-4">
+    {{ content }}
+</main>
+{% include footer.html %}
+<script src="/assets/scripts/navbar.js"></script>

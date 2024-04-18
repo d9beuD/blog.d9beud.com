@@ -55,7 +55,7 @@ article {
     }
 
     code:not(:is(pre code)) {
-        background-color: rgba(var(--highlighted), .25);
+        background-color: rgba(var(--highlighted), .1);
         padding: .2em .5em;
         font-size: 85%;
         border-radius: .3rem;
@@ -93,7 +93,7 @@ article {
             display: block;
             height: 1.7rem;
             &.highlighted {
-                background-color: rgba(var(--highlighted), .2);
+                background-color: rgba(var(--highlighted), .1);
 
                 &.error {
                     --highlighted: var(--deleted);
@@ -146,6 +146,10 @@ article {
         margin-left: 0;
         margin-right: 0;
         border-radius: .5rem;
+    }
+
+    .shiki {
+        background-color: #f8fafc !important;
     }
 }
 

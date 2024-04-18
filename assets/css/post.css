@@ -5,6 +5,8 @@ article {
   --added: 34, 197, 94;
   --added-text: #059669;
   --warning: 245, 158, 11;
+  --link: #2563eb;
+  --link-hover: #3b82f6;
 }
 article p,
 article ul,
@@ -20,6 +22,7 @@ article h4,
 article h5,
 article h6 {
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 article h1:not(:first-child),
 article h2:not(:first-child),
@@ -29,6 +32,25 @@ article h5:not(:first-child),
 article h6:not(:first-child) {
   margin-top: 2rem;
 }
+article h2 {
+  font-size: 1.8rem;
+}
+article blockquote {
+  padding: 0 1rem;
+  border-left: 4px solid rgba(var(--highlighted), 0.5);
+  font-style: italic;
+  color: rgba(var(--highlighted), 0.9);
+}
+article blockquote p:last-child {
+  margin: 0;
+}
+article a {
+  color: var(--link);
+}
+article a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
 article code:not(:is(pre code)) {
   background-color: rgba(var(--highlighted), 0.25);
   padding: 0.2em 0.5em;
@@ -37,26 +59,33 @@ article code:not(:is(pre code)) {
 }
 article pre {
   border-width: 1px !important;
-  padding: 1.25rem 0;
+  padding: 0.5rem 0;
   position: relative;
   overflow-x: auto;
-  font-size: 0.8rem;
   margin-left: -1rem;
   margin-right: -1rem;
+  display: block;
 }
 article pre code {
   display: block;
   background-color: transparent;
   width: fit-content;
+  min-width: 100%;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  padding: 0 1.25rem;
+  line-height: 1.7rem;
+  font-size: 0.9rem;
+  hyphens: none;
 }
 article pre:not(.shiki) {
-  padding: 1.25rem;
+  padding: 0.5rem;
 }
 article pre .line {
-  display: inline-block;
-  line-height: 1.5em;
-  min-width: 100%;
-  padding: 0 1.25rem;
+  display: block;
+  height: 1.7rem;
 }
 article pre .line.highlighted {
   background-color: rgba(var(--highlighted), 0.2);
@@ -66,6 +95,12 @@ article pre .line.highlighted.error {
 }
 article pre .line.highlighted.warning {
   --highlighted: var(--warning);
+}
+article pre .line.highlighted, article pre .line.diff {
+  min-width: calc(100% + 2.5rem);
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  padding: 0 1.25rem;
 }
 article pre .line.diff.remove {
   background-color: rgba(var(--deleted), 0.2);
@@ -106,6 +141,19 @@ article pre .line.diff::before {
   }
   .shiki span {
     color: var(--shiki-dark) !important;
+  }
+  article {
+    --link: #3b82f6;
+    --link-hover: #2563eb;
+  }
+  article blockquote {
+    padding: 0 1rem;
+    border-left: 4px solid rgba(var(--highlighted), 1);
+    font-style: italic;
+    color: rgba(var(--highlighted), 1);
+  }
+  article blockquote p:last-child {
+    margin: 0;
   }
 }
 

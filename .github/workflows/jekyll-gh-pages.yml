@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
       - name: Install npm dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

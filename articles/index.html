@@ -1,0 +1,74 @@
+---
+    layout: home
+    title: Articles
+    pagination:
+        enabled: true
+        collection: posts
+---
+
+<section class="my-8">
+    <div class="container">
+        <h1 class="text-5xl font-bold mb-8 text-center">All articles</h1>
+        <ul class="space-y-4 mb-8">
+            {% for post in paginator.posts %}
+                <li>
+                    <a href="{{ post.url }}" class="group block md:w-3/4 mx-auto text-slate-600 dark:text-slate-300 relative">
+                        <div class="p-4 rounded-lg dark:bg-slate-800">
+                            <h3 class="group-hover:underline text-xl group-hover:text-slate-900 dark:group-hover:text-slate-100">
+                                {{ post.title }}
+                            </h3>
+                            <div class="mb-4 text-sm">{{ post.date | date_to_string }}</div>
+                            <p>
+                                {{ post.excerpt }}
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <nav class="flex justify-center">
+            <ul class="flex border dark:border-slate-600 rounded-lg divide-x dark:divide-slate-600">
+                {% if paginator.previous_page %}
+                    <li class="py-1 px-2">
+                        <a class="page-link" href="{{ paginator.previous_page_path }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="py-1 px-2 opacity-50 pointer-events-none">
+                        <a class="page-link" href="#" aria-label="Previous" disabled>
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                    </li>
+                {% endif %}
+        
+                {% if paginator.page_trail %}
+                    {% for trail in paginator.page_trail %}
+                        <li {% if page.url == trail.path %}class="py-1 px-2 active"{% else %}class="py-1 px-2"{% endif %}>
+                            <a href="{{ trail.path | prepend: site.baseurl }}" class="page-link" title="{{trail.title}}">{{ trail.num }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+        
+                {% if paginator.next_page %}
+                    <li class="py-1 px-2">
+                        <a class="page-link" href="{{ paginator.next_page_path }}" aria-label="Next">
+                            <span aria-hidden="true" class="not-sr-only">&raquo;</span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="py-1 px-2 opacity-50 pointer-events-none">
+                        <a class="page-link" href="#" aria-label="Next" disabled>
+                            <span class="visually-hidden">Next</span>
+                            <span aria-hidden="true" class="not-sr-only">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</section>

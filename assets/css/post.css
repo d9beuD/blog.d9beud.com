@@ -52,7 +52,7 @@ article a:hover {
   text-decoration: underline;
 }
 article code:not(:is(pre code)) {
-  background-color: rgba(var(--highlighted), 0.25);
+  background-color: rgba(var(--highlighted), 0.1);
   padding: 0.2em 0.5em;
   font-size: 85%;
   border-radius: 0.3rem;
@@ -88,7 +88,7 @@ article pre .line {
   height: 1.7rem;
 }
 article pre .line.highlighted {
-  background-color: rgba(var(--highlighted), 0.2);
+  background-color: rgba(var(--highlighted), 0.1);
 }
 article pre .line.highlighted.error {
   --highlighted: var(--deleted);
@@ -129,6 +129,9 @@ article pre .line.diff::before {
     margin-left: 0;
     margin-right: 0;
     border-radius: 0.5rem;
+  }
+  .shiki {
+    background-color: #f8fafc !important;
   }
 }
 @media (prefers-color-scheme: dark) {

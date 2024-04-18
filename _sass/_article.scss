@@ -5,6 +5,8 @@ article {
     --added: 34, 197, 94;
     --added-text: #059669;
     --warning: 245, 158, 11;
+    --link: #2563eb;
+    --link-hover: #3b82f6;
 
     p,
     ul,
@@ -21,9 +23,34 @@ article {
     h5,
     h6 {
         margin-bottom: 1rem;
+        font-weight: bold;
 
         &:not(:first-child) {
             margin-top: 2rem;
+        }
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    blockquote {
+        padding: 0 1rem;
+        border-left: 4px solid rgba(var(--highlighted), .5);
+        font-style: italic;
+        color: rgba(var(--highlighted), .9);
+
+        p:last-child {
+            margin: 0;
+        }
+    }
+
+    a {
+        color: var(--link);
+
+        &:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
         }
     }
 
@@ -36,29 +63,35 @@ article {
     
     pre {
         border-width: 1px !important;
-        padding: 1.25rem 0;
+        padding: .5rem 0;
         position: relative;
         overflow-x: auto;
-        font-size: .8rem;
         margin-left: -1rem;
         margin-right: -1rem;
-
+        display: block;
+        
         code {
             display: block;
             background-color: transparent;
             width: fit-content;
+            min-width: 100%;
+            white-space: pre;
+            word-spacing: normal;
+            word-break: normal;
+            word-wrap: normal;
+            padding: 0 1.25rem;
+            line-height: 1.7rem;
+            font-size: .9rem;
+            hyphens: none;
         }
 
         &:not(.shiki) {
-            padding: 1.25rem;
+            padding: .5rem;
         }
 
         .line {
-            display: inline-block;
-            line-height: 1.5em;
-            min-width: 100%;
-            padding: 0 1.25rem;
-
+            display: block;
+            height: 1.7rem;
             &.highlighted {
                 background-color: rgba(var(--highlighted), .2);
 
@@ -69,6 +102,14 @@ article {
                 &.warning {
                     --highlighted: var(--warning);
                 }
+            }
+
+            &.highlighted,
+            &.diff {
+                min-width: calc(100% + 2.5rem);
+                margin-left: -1.25rem;
+                margin-right: -1.25rem;
+                padding: 0 1.25rem;
             }
 
             &.diff.remove {
@@ -120,5 +161,21 @@ article {
     
     .shiki span {
         color: var(--shiki-dark) !important;
+    }
+
+    article {
+        --link: #3b82f6;
+        --link-hover: #2563eb;
+
+        blockquote {
+            padding: 0 1rem;
+            border-left: 4px solid rgba(var(--highlighted), 1);
+            font-style: italic;
+            color: rgba(var(--highlighted), 1);
+
+            p:last-child {
+                margin: 0;
+            }
+        }
     }
 }

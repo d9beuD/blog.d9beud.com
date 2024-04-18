@@ -22,6 +22,7 @@
         transformerNotationDiff,
         transformerNotationHighlight,
         transformerNotationErrorLevel,
+        transformerRemoveLineBreak,
     } from 'https://cdn.jsdelivr.net/npm/@shikijs/transformers@1.3.0/+esm'
     
     const highlighter = await getHighlighterCore({
@@ -44,6 +45,7 @@
                 transformerNotationDiff(),
                 transformerNotationHighlight(),
                 transformerNotationErrorLevel(),
+                transformerRemoveLineBreak(),
             ]
         })
         pre.outerHTML = html

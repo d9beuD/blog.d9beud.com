@@ -21,9 +21,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  JEKYLL_ENV: production
-
 jobs:
   # Build job
   build:
@@ -42,6 +39,8 @@ jobs:
         with:
           source: ./
           destination: ./_site
+        env:
+          JEKYLL_ENV: production
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 

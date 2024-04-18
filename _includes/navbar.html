@@ -9,10 +9,13 @@
                     <div class="border border-slate-600 rounded max-h-full flex-none"></div>
                 </div>
             </button>
-            <nav id="main-navbar-collapse" class="min-w-full md:min-w-0 grow transition-all hidden md:block">
-                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1">
+            <nav id="main-navbar-collapse" class="min-w-full md:min-w-0 grow transition-all hidden md:flex">
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1 me-auto">
                     {% include navbar-item.html href='/articles' label='Articles' %}
-                    {% include navbar-item.html href='/about' label='About' %}
+                    {% include navbar-item.html href='https://d9beud.com' label='About' %}
+                </ul>
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1">
+                    {% include navbar-item.html href='https://github.com/d9beuD' label='GitHub' %}
                 </ul>
             </nav>
         </div>

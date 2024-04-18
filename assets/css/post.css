@@ -1,0 +1,112 @@
+article {
+  --highlighted: 100, 116, 139;
+  --deleted: 220, 38, 38;
+  --deleted-text: #dc2626;
+  --added: 34, 197, 94;
+  --added-text: #059669;
+  --warning: 245, 158, 11;
+}
+article p,
+article ul,
+article ol,
+article blockquote,
+article pre {
+  margin-bottom: 0.8rem;
+}
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+  margin-bottom: 1rem;
+}
+article h1:not(:first-child),
+article h2:not(:first-child),
+article h3:not(:first-child),
+article h4:not(:first-child),
+article h5:not(:first-child),
+article h6:not(:first-child) {
+  margin-top: 2rem;
+}
+article code:not(:is(pre code)) {
+  background-color: rgba(var(--highlighted), 0.25);
+  padding: 0.2em 0.5em;
+  font-size: 85%;
+  border-radius: 0.3rem;
+}
+article pre {
+  border-width: 1px !important;
+  padding: 1.25rem 0;
+  position: relative;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+article pre code {
+  display: block;
+  background-color: transparent;
+  width: fit-content;
+}
+article pre:not(.shiki) {
+  padding: 1.25rem;
+}
+article pre .line {
+  display: inline-block;
+  line-height: 1.5em;
+  min-width: 100%;
+  padding: 0 1.25rem;
+}
+article pre .line.highlighted {
+  background-color: rgba(var(--highlighted), 0.2);
+}
+article pre .line.highlighted.error {
+  --highlighted: var(--deleted);
+}
+article pre .line.highlighted.warning {
+  --highlighted: var(--warning);
+}
+article pre .line.diff.remove {
+  background-color: rgba(var(--deleted), 0.2);
+}
+article pre .line.diff.remove > span {
+  opacity: 0.6;
+}
+article pre .line.diff.remove::before {
+  content: "-";
+  color: var(--deleted-text);
+}
+article pre .line.diff.add {
+  background-color: rgba(var(--added), 0.2);
+}
+article pre .line.diff.add::before {
+  content: "+";
+  color: var(--added-text);
+}
+article pre .line.diff::before {
+  position: absolute;
+  left: 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  article pre {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0.5rem;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  pre {
+    border-color: transparent;
+  }
+  .shiki {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+  .shiki span {
+    color: var(--shiki-dark) !important;
+  }
+}
+
+/*# sourceMappingURL=post.css.map */

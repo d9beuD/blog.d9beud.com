@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <title>d9beuD's Blog</title>
+</head>
+<body class="min-h-dvh flex flex-col dark:bg-slate-900 dark:text-slate-50">
+    <header class="border-b dark:border-slate-600 bg-white/50 dark:bg-slate-900/80  backdrop-blur-lg sticky top-0 z-10">
+    <div class="container mx-auto p-2 md:px-4 leading-7">
+        <div class="flex flex-wrap items-center justify-between md:content-start md:gap-x-4">
+            <a href="/" class="font-bold text-lg px-2 me-auto md:me-0 md:px-0">d9beuD's Blog</a>
+            <button class="border-2 border-slate-600 rounded md:hidden hover:bg-slate-100 dark:hover:bg-slate-800 mx-2" data-collapse="#main-navbar-collapse">
+                <div class="size-6 px-1 flex flex-col justify-evenly">
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                </div>
+            </button>
+            <nav id="main-navbar-collapse" class="min-w-full md:min-w-0 grow transition-all hidden md:flex">
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1 me-auto">
+                    <li>
+    <a 
+        href="/articles" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        Articles
+    </a>
+</li>
+                    <li>
+    <a 
+        href="https://d9beud.com" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        About
+    </a>
+</li>
+                </ul>
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1">
+                    <li>
+    <a 
+        href="https://github.com/d9beuD" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        GitHub
+    </a>
+</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<main class="container mx-auto px-4">
+    <section class="my-8 max-w-[1024px] mx-auto md:grid grid-cols-12 gap-x-8 space-y-8 md:space-y-0">
+    <aside class="col-span-11 md:col-span-3">
+        <div class="sticky top-24 space-y-4">
+            <div>
+                <h3 class="font-bold mb-1">About the author</h3>
+                <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-2">
+                    <div class="flex gap-x-2 md:flex-col items-center flex-wrap">
+                        <div class="aspect-square w-16 md:w-32 rounded-full overflow-hidden">
+                            <img src="/assets/img/vbathelier.webp" alt="Author picture" class="object-contain">
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-bold">Vincent BATHELIER</h2>
+                            <p>
+                                I am a web developer and I love to share my knowledge with the community.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="font-bold mb-1">Tags</h3>
+                <ul class="flex gap-1">
+                    
+                    
+                        <li>
+                            <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border rounded-full px-2 py-1">jekyll</a>
+                        </li>
+                    
+                        <li>
+                            <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border rounded-full px-2 py-1">update</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <article class="flex-grow col-span-11 md:col-span-9">
+        <h1 class="text-4xl font-bold">Welcome to Jekyll!</h1>
+        <p>You’ll find this post in your <code>_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code>jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+
+<p>Jekyll requires blog post files to be named according to the following format:</p>
+
+<p><code>YEAR-MONTH-DAY-title.MARKUP</code></p>
+
+<p>Where <code>YEAR</code> is a four-digit number, <code>MONTH</code> and <code>DAY</code> are both two-digit numbers, and <code>MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+
+<p>Jekyll also offers powerful support for code snippets:</p>
+
+<pre><code class="language-php"># src/Entity/User.php
+namespace App\Entity;
+
+use ApiPlatform\Metadata\ApiResource; // [!code highlight:2]
+use ApiPlatform\Metadata\Delete;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(processor: UserPasswordHasher::class, validationContext: ['groups' =&gt; ['Default', 'user:create']]),
+        new Get(
+            uriTemplate: '/users/me', // [!code error]
+            security: "is_granted('ROLE_USER') and object == user", // [!code warning]
+            provider: CurrentUserProvider::class,
+            openapi: new Operation(
+                summary: 'Retrieves the current user',
+            )
+        ),
+        new Get(), // [!code --]
+        new Put(processor: UserPasswordHasher::class), // [!code ++]
+        new Patch(processor: UserPasswordHasher::class),
+        new Delete(),
+    ],
+    normalizationContext: ['groups' =&gt; ['user:read']],
+    denormalizationContext: ['groups' =&gt; ['user:create', 'user:update']],
+)]
+class User extends Manager implements UserInterface, PasswordAuthenticatedUserInterface, OAuthAwareUserProviderInterface
+{
+    #[Groups(['user:read'])]
+    private ?int $id;
+
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
+    #[ORM\Column(length: 254)]
+    private ?string $email = null;
+
+    /**
+     * @var list&lt;string&gt; The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    public function __construct()
+    {
+        $this-&gt;memberships = new ArrayCollection();
+        Test(name: 'test');
+    }
+
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface {
+        $this-&gt;setEmail($response-&gt;getEmail());
+        $this-&gt;setFirstname($response-&gt;getFirstName());
+        $this-&gt;setLastname($response-&gt;getLastName());
+        $this-&gt;setAvatar($response-&gt;getProfilePicture());
+        $this-&gt;setGoogleId($response-&gt;getUserIdentifier());
+
+        return $this;
+    }
+}
+</code></pre>
+
+<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+
+
+    </article>
+</section>
+</main>
+<footer class="border-t dark:border-slate-600 mt-auto">
+    <div class="container mx-auto p-2 md:px-4">
+        <p class="text-center text-sm text-slate-600">
+            &copy; d9beuD's Blog 2024
+            —
+            Built with
+            <a href="https://jekyllrb.com" class="text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">Jekyll</a>
+            and hosted on
+            <a href="https://pages.github.com" class="text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">GitHub Pages</a>.
+        </p>
+    </div>
+</footer>
+<script src="/assets/scripts/navbar.js"></script>
+<script type="module">
+    import { getHighlighterCore } from 'https://esm.run/shiki@1.3/dist/core.mjs'
+    import getWasm from 'https://esm.run/shiki@1.3/wasm'
+
+    import githubLight from 'https://esm.run/shiki@1.3/themes/github-light.mjs'
+    import githubDark from 'https://esm.run/shiki@1.3/themes/github-dark.mjs'
+
+    import php from 'https://esm.run/shiki@1.3/langs/php.mjs'
+
+    import {
+        transformerNotationDiff,
+        transformerNotationHighlight,
+        transformerNotationErrorLevel,
+    } from 'https://cdn.jsdelivr.net/npm/@shikijs/transformers@1.3.0/+esm'
+    
+    const highlighter = await getHighlighterCore({
+        themes: [githubLight, githubDark],
+        langs: [php],
+        loadWasm: getWasm,
+    })
+
+    document.querySelectorAll('pre').forEach(async (pre) => {
+        const code = pre.querySelector('code')
+        // get language name from class name without the 'language' prefix
+        const language = code.className.replace('language-', '')
+        const html = await highlighter.codeToHtml(code.textContent.trim(), {
+            lang: language,
+            themes: {
+                light: 'github-light',
+                dark: 'github-dark'
+            },
+            transformers: [
+                transformerNotationDiff(),
+                transformerNotationHighlight(),
+                transformerNotationErrorLevel(),
+            ]
+        })
+        pre.outerHTML = html
+    })
+</script>
+</body>
+</html>

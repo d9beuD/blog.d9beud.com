@@ -24,11 +24,11 @@
 
             <div>
                 <h3 class="font-bold mb-1">Tags</h3>
-                <ul class="flex gap-1">
+                <ul class="flex gap-1 flex-wrap">
                     {% assign tags = page.tags | sort_natural %}
                     {% for tag in tags %}
                         <li>
-                            <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border rounded-full px-2 py-1">{{ tag }}</a>
+                            <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 inline-block border rounded-full px-2">{{ tag }}</a>
                         </li>
                     {% endfor %}
                 </ul>

@@ -15,6 +15,7 @@ Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit number
 Jekyll also offers powerful support for code snippets:
 
 ```php
+# src/Entity/User.php
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource; // [!code highlight:2]

@@ -21,6 +21,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  JEKYLL_ENV: production
+
 jobs:
   # Build job
   build:

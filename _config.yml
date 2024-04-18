@@ -26,7 +26,7 @@ description: >-
   to share my knowledge and experience with the community. I will mainly write
   about PHP, Symfony, Vue.js, Jekyll, Api Platform, and other technologies I use.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://blog.d9beud.com" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  d9beuD
 
 author:

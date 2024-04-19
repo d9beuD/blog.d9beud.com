@@ -192,7 +192,7 @@ To handle authentication, I created an `auth` store based on [Pinia](https://pin
 ```ts
 // src/stores/auth.ts
 import { defineStore } from 'pinia'
-import { ref} from 'vue'
+import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
   const jwt = ref<string | null>(null)
@@ -321,11 +321,11 @@ watch([jwt, currentUser], () => {  // [!code ++:3]
 
 Congrats! You now have a way to log your users in with Google OAuth and authenticate them with your API using a JWT token.
 
-But... there is one more thing. Because your new users are not registered in your database, so you got this weir 
+But... there is one more thing. Because your new users are not registered in your database yet. 
 
 ## Registering users after OAuth success
 
-`HWIOAuthBundle` provides a way to register users, it's called `connect`. I'm sure it works great, but it relies on Symfony forms and I don't want to use them as I'm using Vue.js. I want my users to be registered automatically after they log in with Google.
+`HWIOAuthBundle` provides a way to register users, it's called `connect`. I'm sure it works great, but it relies on Symfony forms and I don't want to use them as I'm using Vue.js instead. I want my users to be registered automatically after they log in with Google.
 
 Also, when I tried to buypass the form step, I got this error:
 
@@ -375,7 +375,8 @@ Still, we need to tell `HWIOAuthBundle` to use our custom `EntityUserProvider` s
 services:
   # ... other services
   hwi_oauth.user.provider.entity:
-    class: App\Security\EntityUserProvider
+    class: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider // [!code --]
+    class: App\Security\EntityUserProvider // [!code ++]
     arguments:
       $class: App\Entity\User
       $properties:

@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="d9beuD’s Blog" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Vincent BATHELIER","url":"https://d9beud.com"},"dateModified":"2024-04-18T23:50:32+02:00","description":"A blog about web development, programming, and other tech-related topics. I want to share my knowledge and experience with the community. I will mainly write about PHP, Symfony, Vue.js, Jekyll, Api Platform, and other technologies I use.","headline":"d9beuD’s Blog","url":"https://blog.d9beud.com/404.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Vincent BATHELIER","url":"https://d9beud.com"},"dateModified":"2024-04-19T20:48:02+02:00","description":"A blog about web development, programming, and other tech-related topics. I want to share my knowledge and experience with the community. I will mainly write about PHP, Symfony, Vue.js, Jekyll, Api Platform, and other technologies I use.","headline":"d9beuD’s Blog","url":"https://blog.d9beud.com/404.html"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -101,6 +101,8 @@
     import php from 'https://esm.run/shiki@1.3/langs/php.mjs'
     import yml from 'https://esm.run/shiki@1.3/langs/yaml.mjs'
     import shell from 'https://esm.run/shiki@1.3/langs/shellscript.mjs'
+    import ts from 'https://esm.run/shiki@1.3/langs/typescript.mjs'
+    import vue from 'https://esm.run/shiki@1.3/langs/vue.mjs'
 
     import {
         transformerNotationDiff,
@@ -111,7 +113,7 @@
     
     const highlighter = await getHighlighterCore({
         themes: [githubLight, githubDark],
-        langs: [php, yml, shell],
+        langs: [php, yml, shell, ts, vue],
         loadWasm: getWasm,
     })
 

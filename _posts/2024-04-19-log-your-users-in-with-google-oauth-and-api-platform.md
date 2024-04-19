@@ -18,7 +18,7 @@ The idea is to use `HWIOAuthBundle` to authenticate users with Google. Once auth
 
 It works great if the Symfony application is handling the frontend. But in our case, **we are using Vue.js**. The problem is that OAuth applications are not allowed to have multiple redirect URIs (it's the URI where the OAuth server respond with its access token). So we can't have one for the Symfony application and one for the Vue.js application.
 
-Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters the backend will send the JWT token back to the frontend.
+Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.
 
 ## Setting up `HWIOAuthBundle`
 

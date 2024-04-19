@@ -70,14 +70,14 @@ security:
           service: hwi_oauth.user.provider.entity
 ```
 
-Say the user successfully logs in with Google, `HWIOAuthBundle` needs a service that is able to load users based on the user response of the OAuth endpoint. As I am using Doctrine ORM to store my users, I configured the `hwi_oauth.user.provider.entity` service like this:
+Say the user successfully logs in with Google, `HWIOAuthBundle` needs a service that is able to load users based on the user response of the OAuth endpoint. As I am using Doctrine ORM to store my users, I chose the `hwi_oauth.user.provider.entity` service.
 
 ```yml
 # config/services.yaml
 services:
   # ... other services
   hwi_oauth.user.provider.entity:
-    class: App\Security\EntityUserProvider
+    class: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider
     arguments:
       $class: App\Entity\User
       $properties:

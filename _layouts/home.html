@@ -17,6 +17,8 @@
     import php from 'https://esm.run/shiki@1.3/langs/php.mjs'
     import yml from 'https://esm.run/shiki@1.3/langs/yaml.mjs'
     import shell from 'https://esm.run/shiki@1.3/langs/shellscript.mjs'
+    import ts from 'https://esm.run/shiki@1.3/langs/typescript.mjs'
+    import vue from 'https://esm.run/shiki@1.3/langs/vue.mjs'
 
     import {
         transformerNotationDiff,
@@ -27,7 +29,7 @@
     
     const highlighter = await getHighlighterCore({
         themes: [githubLight, githubDark],
-        langs: [php, yml, shell],
+        langs: [php, yml, shell, ts, vue],
         loadWasm: getWasm,
     })
 

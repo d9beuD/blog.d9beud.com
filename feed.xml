@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.d9beud.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.d9beud.com/" rel="alternate" type="text/html" /><updated>2024-04-19T23:56:49+02:00</updated><id>https://blog.d9beud.com/feed.xml</id><title type="html">d9beuD’s Blog</title><subtitle>A blog about web development, programming, and other tech-related topics. I want to share my knowledge and experience with the community. I will mainly write about PHP, Symfony, Vue.js, Jekyll, Api Platform, and other technologies I use.</subtitle><author><name>Vincent BATHELIER</name></author><entry><title type="html">Log your users in with Google OAuth, API Platform and Vue.js</title><link href="https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html" rel="alternate" type="text/html" title="Log your users in with Google OAuth, API Platform and Vue.js" /><published>2024-04-19T20:43:00+02:00</published><updated>2024-04-19T23:56:21+02:00</updated><id>https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform</id><content type="html" xml:base="https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"><![CDATA[<p>I recently started a new project using <strong>Symfony 7</strong>, <strong>API Platform</strong> and <strong>Vue.js 3</strong>. I wanted to allow users to log in or register with their Google account. Here is how I did it.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.d9beud.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.d9beud.com/" rel="alternate" type="text/html" /><updated>2024-04-20T00:13:04+02:00</updated><id>https://blog.d9beud.com/feed.xml</id><title type="html">d9beuD’s Blog</title><subtitle>A blog about web development, programming, and other tech-related topics. I want to share my knowledge and experience with the community. I will mainly write about PHP, Symfony, Vue.js, Jekyll, Api Platform, and other technologies I use.</subtitle><author><name>Vincent BATHELIER</name></author><entry><title type="html">Log your users in with Google OAuth, API Platform and Vue.js</title><link href="https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html" rel="alternate" type="text/html" title="Log your users in with Google OAuth, API Platform and Vue.js" /><published>2024-04-19T20:43:00+02:00</published><updated>2024-04-20T00:12:33+02:00</updated><id>https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform</id><content type="html" xml:base="https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"><![CDATA[<p>I recently started a new project using <strong>Symfony 7</strong>, <strong>API Platform</strong> and <strong>Vue.js 3</strong>. I wanted to allow users to log in or register with their Google account. Here is how I did it.</p>
 
 <p>First, like you probably did, I looked online for a bundle that would help me with that. I found <a href="https://github.com/knpuniversity/oauth2-client-bundle"><code>knpuniversity/oauth2-client-bundle</code></a> wich was promising. Reading in their <code>README.md</code>, I saw the following:</p>
 
@@ -175,7 +175,7 @@ security:
 
 <pre><code class="language-ts">// src/stores/auth.ts
 import { defineStore } from 'pinia'
-import { ref} from 'vue'
+import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () =&gt; {
   const jwt = ref&lt;string | null&gt;(null)
@@ -298,11 +298,11 @@ watch([jwt, currentUser], () =&gt; {  // [!code ++:3]
 
 <p>Congrats! You now have a way to log your users in with Google OAuth and authenticate them with your API using a JWT token.</p>
 
-<p>But… there is one more thing. Because your new users are not registered in your database, so you got this weir</p>
+<p>But… there is one more thing. Because your new users are not registered in your database yet.</p>
 
 <h2 id="registering-users-after-oauth-success">Registering users after OAuth success</h2>
 
-<p><code>HWIOAuthBundle</code> provides a way to register users, it’s called <code>connect</code>. I’m sure it works great, but it relies on Symfony forms and I don’t want to use them as I’m using Vue.js. I want my users to be registered automatically after they log in with Google.</p>
+<p><code>HWIOAuthBundle</code> provides a way to register users, it’s called <code>connect</code>. I’m sure it works great, but it relies on Symfony forms and I don’t want to use them as I’m using Vue.js instead. I want my users to be registered automatically after they log in with Google.</p>
 
 <p>Also, when I tried to buypass the form step, I got this error:</p>
 
@@ -349,7 +349,8 @@ private function registerUser(UserResponseInterface $response): UserInterface //
 services:
   # ... other services
   hwi_oauth.user.provider.entity:
-    class: App\Security\EntityUserProvider
+    class: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider // [!code --]
+    class: App\Security\EntityUserProvider // [!code ++]
     arguments:
       $class: App\Entity\User
       $properties:

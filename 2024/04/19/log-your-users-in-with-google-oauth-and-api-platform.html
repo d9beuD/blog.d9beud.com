@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Log your users in with Google OAuth, API Platform and Vue.js" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-04-19T20:48:02+02:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-04-19T23:44:00+02:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -148,7 +148,7 @@
 
 <p>It works great if the Symfony application is handling the frontend. But in our case, <strong>we are using Vue.js</strong>. The problem is that OAuth applications are not allowed to have multiple redirect URIs (it’s the URI where the OAuth server respond with its access token). So we can’t have one for the Symfony application and one for the Vue.js application.</p>
 
-<p>Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters the backend will send the JWT token back to the frontend.</p>
+<p>Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.</p>
 
 <h2 id="setting-up-hwioauthbundle">Setting up <code>HWIOAuthBundle</code></h2>
 

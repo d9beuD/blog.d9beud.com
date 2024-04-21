@@ -386,4 +386,4 @@ And finally, if our users logged in with Google aren't registered in our databas
 
 ## Conclusion
 
-In this article, I showed you how to log your users in with Google OAuth and authenticate them with your API using a JWT token. I hope you found it helpful. If you have any questions or feedback, feel free to reach out to me on X ([@d9beuD](https://x.com/d9beuD)).
+In this article, we saw how to log your users in with Google OAuth and authenticate them with your API using a JWT token. I hope you found it helpful. If you have any questions or feedback, feel free to reach out to me on X ([@d9beuD](https://x.com/d9beuD)).

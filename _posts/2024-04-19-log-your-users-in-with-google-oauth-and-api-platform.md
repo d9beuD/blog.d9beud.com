@@ -20,6 +20,8 @@ It works great if the Symfony application is handling the frontend. But in our c
 
 Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.
 
+[![](https://mermaid.ink/svg/pako:eNp9kLFOAzEMhl_F8sJA7wUydChIRQgJpIJYbjGJ256ac0KcqEJV352kd4BgIEPkX_6c_P5PaINjNKj8Xlgs3w60SzT2AvWsUjgqp265nCsDL_UG6wd7UOjxJoiwzXAc8h7WIew89_h39vopxBINPEYWhRhiV-LEXBqNWJE9sDgDD4Gcwtsk54cm0Ux8UWvOOn93pZBYYxDlf3DhRJnh_vX5N1Spbna3qVp_iMla63-vfkfiPF8YXODIaaTB1ehObaLHvOexbm9q6XhLxecWxbmiVHLYfIhFk1PhBZboqps5aTRb8srnT4F_gyA)](https://mermaid.live/edit#pako:eNp9kL1uQjEMhV_F8tIBeIEMDLQSVVWJSlB1uYubGLgi10njRKhCvHsDN_0RQzNEPvIX5_ic0AbHaFD5o7BYfuhpl2joBOpZpHBUTrP5fNJKA6_1But7e1Do8D6IsM1w7PMeliHsPHd4-_glxBINrCKLQgxxVuKIXBsVWJA9sDgDz4Gcwvso25hR_KWWnLV9dqeQWGMQ5X9w4USZ4eltcws1a-uq9Lf_4-t76UcS5_lK4BQHTgP1rqZ2uvAd5j0PdW9TS8dbKj5fQjhXlEoO60-xaHIqPMUSXXXSQkazJa98_gJgh4JB)
+
 ## Setting up `HWIOAuthBundle`
 
 First, let's install `HWIOAuthBundle` in our Symfony project:

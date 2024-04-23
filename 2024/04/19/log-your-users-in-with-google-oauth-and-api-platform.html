@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Log your users in with Google OAuth, API Platform and Vue.js" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-04-21T20:51:40+02:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-04-23T17:02:48+02:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -72,8 +72,8 @@
     </div>
 </header>
 <main class="container mx-auto px-4">
-    <section class="my-8 max-w-[1024px] mx-auto md:grid grid-cols-12 gap-x-8 space-y-8 md:space-y-0">
-    <aside class="col-span-11 md:col-span-3">
+    <section class="my-8 max-w-[1024px] mx-auto grid grid-cols-12 gap-x-8 md:space-y-0">
+    <aside class="col-span-12 md:col-span-4 lg:col-span-3 order-1">
         <div class="sticky top-24 space-y-4">
             <div>
                 <h3 class="font-bold mb-1">About the author</h3>
@@ -130,8 +130,11 @@
         </div>
     </aside>
 
-    <article class="flex-grow col-span-11 md:col-span-9">
-        <h1 class="text-4xl font-bold">Log your users in with Google OAuth, API Platform and Vue.js</h1>
+    <article class="flex-grow col-span-12 md:col-span-8 lg:col-span-9 order-first md:order-2 mb-8">
+        <div class="mb-8">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-0">Log your users in with Google OAuth, API Platform and Vue.js</h1>
+            <small class="text-slate-500 text-sm">19 Apr 2024 • Vincent BATHELIER</small>
+        </div>
         <p>I recently started a new project using <strong>Symfony 7</strong>, <strong>API Platform</strong> and <strong>Vue.js 3</strong>. I wanted to allow users to log in or register with their Google account. Here is how I did it.</p>
 
 <p>First, like you probably did, I looked online for a bundle that would help me with that. I found <a href="https://github.com/knpuniversity/oauth2-client-bundle"><code>knpuniversity/oauth2-client-bundle</code></a> wich was promising. Reading in their <code>README.md</code>, I saw the following:</p>
@@ -149,6 +152,8 @@
 <p>It works great if the Symfony application is handling the frontend. But in our case, <strong>we are using Vue.js</strong>. The problem is that OAuth applications are not allowed to have multiple redirect URIs (it’s the URI where the OAuth server respond with its access token). So we can’t have one for the Symfony application and one for the Vue.js application.</p>
 
 <p>Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.</p>
+
+<p><a href="https://mermaid.live/edit#pako:eNp9kL1uQjEMhV_F8tIBeIEMDLQSVVWJSlB1uYubGLgi10njRKhCvHsDN_0RQzNEPvIX5_ic0AbHaFD5o7BYfuhpl2joBOpZpHBUTrP5fNJKA6_1But7e1Do8D6IsM1w7PMeliHsPHd4-_glxBINrCKLQgxxVuKIXBsVWJA9sDgDz4Gcwvso25hR_KWWnLV9dqeQWGMQ5X9w4USZ4eltcws1a-uq9Lf_4-t76UcS5_lK4BQHTgP1rqZ2uvAd5j0PdW9TS8dbKj5fQjhXlEoO60-xaHIqPMUSXXXSQkazJa98_gJgh4JB"><img src="https://mermaid.ink/svg/pako:eNp9kLFOAzEMhl_F8sJA7wUydChIRQgJpIJYbjGJ256ac0KcqEJV352kd4BgIEPkX_6c_P5PaINjNKj8Xlgs3w60SzT2AvWsUjgqp265nCsDL_UG6wd7UOjxJoiwzXAc8h7WIew89_h39vopxBINPEYWhRhiV-LEXBqNWJE9sDgDD4Gcwtsk54cm0Ux8UWvOOn93pZBYYxDlf3DhRJnh_vX5N1Spbna3qVp_iMla63-vfkfiPF8YXODIaaTB1ehObaLHvOexbm9q6XhLxecWxbmiVHLYfIhFk1PhBZboqps5aTRb8srnT4F_gyA" alt="" /></a></p>
 
 <h2 id="setting-up-hwioauthbundle">Setting up <code>HWIOAuthBundle</code></h2>
 

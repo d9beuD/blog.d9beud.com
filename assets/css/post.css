@@ -13,7 +13,7 @@ article ul,
 article ol,
 article blockquote,
 article pre {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 article h1,
 article h2,
@@ -51,11 +51,17 @@ article a:hover {
   color: var(--link-hover);
   text-decoration: underline;
 }
+article img {
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  border-width: 1px !important;
+}
 article code:not(:is(pre code)) {
   background-color: rgba(var(--highlighted), 0.1);
   padding: 0.2em 0.5em;
   font-size: 85%;
   border-radius: 0.3rem;
+  word-break: break-all;
 }
 article pre {
   border-width: 1px !important;

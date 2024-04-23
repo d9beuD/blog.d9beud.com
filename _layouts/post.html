@@ -2,8 +2,8 @@
     layout: home
 ---
 
-<section class="my-8 max-w-[1024px] mx-auto md:grid grid-cols-12 gap-x-8 space-y-8 md:space-y-0">
-    <aside class="col-span-11 md:col-span-3">
+<section class="my-8 max-w-[1024px] mx-auto grid grid-cols-12 gap-x-8 md:space-y-0">
+    <aside class="col-span-12 md:col-span-4 lg:col-span-3 order-1">
         <div class="sticky top-24 space-y-4">
             <div>
                 <h3 class="font-bold mb-1">About the author</h3>
@@ -36,7 +36,7 @@
         </div>
     </aside>
 
-    <article class="flex-grow col-span-11 md:col-span-9">
+    <article class="flex-grow col-span-12 md:col-span-8 lg:col-span-9 order-first md:order-2 mb-8">
         <h1 class="text-4xl lg:text-5xl font-bold">{{ page.title }}</h1>
         {{ content }}
     </article>

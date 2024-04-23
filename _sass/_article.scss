@@ -54,6 +54,12 @@ article {
         }
     }
 
+    img {
+        background-color: #f8fafc;
+        border-radius: .5rem;
+        border-width: 1px !important;
+    }
+
     code:not(:is(pre code)) {
         background-color: rgba(var(--highlighted), .1);
         padding: .2em .5em;

@@ -65,16 +65,17 @@ article {
         padding: .2em .5em;
         font-size: 85%;
         border-radius: .3rem;
-        word-break: break-all;
+        word-break: break-word;
     }
     
     pre {
         border-width: 1px !important;
+        background-color: #f8fafc !important;
         padding: .5rem 0;
         position: relative;
         overflow-x: auto;
-        margin-left: -1rem;
-        margin-right: -1rem;
+        margin-left: -2rem;
+        margin-right: -2rem;
         display: block;
         
         code {
@@ -90,10 +91,6 @@ article {
             line-height: 1.7rem;
             font-size: .9rem;
             hyphens: none;
-        }
-
-        &:not(.shiki) {
-            padding: .5rem;
         }
 
         .line {
@@ -153,10 +150,6 @@ article {
         margin-left: 0;
         margin-right: 0;
         border-radius: .5rem;
-    }
-
-    .shiki {
-        background-color: #f8fafc !important;
     }
 }
 

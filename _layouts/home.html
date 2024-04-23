@@ -2,54 +2,7 @@
     layout: default
 ---
 {% include navbar.html %}
-<main class="container mx-auto px-4">
-    {{ content }}
-</main>
+{{ content }}
 {% include footer.html %}
+
 <script src="/assets/scripts/navbar.js"></script>
-<script type="module">
-    import { getHighlighterCore } from 'https://esm.run/shiki@1.3/dist/core.mjs'
-    import getWasm from 'https://esm.run/shiki@1.3/wasm'
-
-    import githubLight from 'https://esm.run/shiki@1.3/themes/github-light.mjs'
-    import githubDark from 'https://esm.run/shiki@1.3/themes/github-dark.mjs'
-
-    import php from 'https://esm.run/shiki@1.3/langs/php.mjs'
-    import yml from 'https://esm.run/shiki@1.3/langs/yaml.mjs'
-    import shell from 'https://esm.run/shiki@1.3/langs/shellscript.mjs'
-    import ts from 'https://esm.run/shiki@1.3/langs/typescript.mjs'
-    import vue from 'https://esm.run/shiki@1.3/langs/vue.mjs'
-
-    import {
-        transformerNotationDiff,
-        transformerNotationHighlight,
-        transformerNotationErrorLevel,
-        transformerRemoveLineBreak,
-    } from 'https://cdn.jsdelivr.net/npm/@shikijs/transformers@1.3.0/+esm'
-    
-    const highlighter = await getHighlighterCore({
-        themes: [githubLight, githubDark],
-        langs: [php, yml, shell, ts, vue],
-        loadWasm: getWasm,
-    })
-
-    document.querySelectorAll('pre').forEach(async (pre) => {
-        const code = pre.querySelector('code')
-        // get language name from class name without the 'language' prefix
-        const language = code.className.replace('language-', '')
-        const html = await highlighter.codeToHtml(code.textContent.trim(), {
-            lang: language,
-            themes: {
-                light: 'github-light',
-                dark: 'github-dark'
-            },
-            transformers: [
-                transformerNotationDiff(),
-                transformerNotationHighlight(),
-                transformerNotationErrorLevel(),
-                transformerRemoveLineBreak(),
-            ]
-        })
-        pre.outerHTML = html
-    })
-</script>

@@ -5,14 +5,14 @@ import {
   transformerNotationErrorLevel,
   transformerRemoveLineBreak,
 } from '@shikijs/transformers';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 (async () => {
   const lang = process.argv[2] || 'plaintext';
   const filePath = process.argv[3];
-  
+
   try {
-    const code = fs.readFileSync(filePath, 'utf8');
+    const code = await fs.readFile(filePath, 'utf8');
     const highlighter = await getSingletonHighlighter({
       themes: ['github-light', 'github-dark'],
       langs: ['php', 'yml', 'shell', 'ts', 'vue']

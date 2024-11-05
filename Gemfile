@@ -10,6 +10,7 @@ group :jekyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-last-modified-at"
   gem "jekyll-paginate-v2"
+  gem "jekyll-responsive-magick"
 end
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -15,7 +15,8 @@
                         <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-2">
                             <div class="flex gap-x-2 md:flex-col items-center flex-wrap">
                                 <div class="aspect-square w-16 md:w-32 rounded-full overflow-hidden">
-                                    <img src="{{ page.author.avatar }}" alt="Author picture" class="object-contain">
+                                    {% assign src = page.author.avatar %}
+                                    <img src="{{ src | size: 128 }}" alt="Author picture" class="object-contain" width="128" height="128">
                                 </div>
                                 <div class="flex-1">
                                     <h2 class="font-bold">{{ page.author.name }}</h2>

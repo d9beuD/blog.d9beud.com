@@ -50,6 +50,7 @@ GEM
     jekyll-paginate-v2 (3.0.0)
       jekyll (>= 3.0, < 5.0)
     jekyll-postcss (0.5.0)
+    jekyll-responsive-magick (1.3.1)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
     jekyll-seo-tag (2.8.0)
@@ -162,6 +163,7 @@ DEPENDENCIES
   jekyll-last-modified-at
   jekyll-paginate-v2
   jekyll-postcss
+  jekyll-responsive-magick
   jekyll-seo-tag
   jekyll-sitemap
   tzinfo (>= 1, < 3)

@@ -4,5 +4,9 @@
     "cssnano": "^6.1.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "@shikijs/transformers": "^1.22.2",
+    "shiki": "^1.22.2"
   }
 }

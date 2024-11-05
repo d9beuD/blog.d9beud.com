@@ -69,33 +69,36 @@ article {
     }
     
     pre {
+        --code-line-height: 1.7rem;
+        --code-padding-x: 1.5rem;
         border-width: 1px !important;
         background-color: #f8fafc !important;
-        padding: .5rem 0;
         position: relative;
+        padding: .5rem 0;
+        direction: ltr;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        tab-size: 4;
+        hyphens: none;
         overflow-x: auto;
-        margin-left: -2rem;
-        margin-right: -2rem;
-        display: block;
         
         code {
             display: block;
-            background-color: transparent;
+            padding: 0 var(--code-padding-x);
             width: fit-content;
             min-width: 100%;
-            white-space: pre;
-            word-spacing: normal;
-            word-break: normal;
-            word-wrap: normal;
-            padding: 0 1.25rem;
-            line-height: 1.7rem;
-            font-size: .9rem;
-            hyphens: none;
+            line-height: var(--code-line-height);
+            font-size: .875rem;
         }
 
         .line {
             display: block;
-            height: 1.7rem;
+            height: var(--code-line-height);
+            white-space: pre;
+
             &.highlighted {
                 background-color: rgba(var(--highlighted), .1);
 
@@ -111,9 +114,9 @@ article {
             &.highlighted,
             &.diff {
                 min-width: calc(100% + 2.5rem);
-                margin-left: -1.25rem;
-                margin-right: -1.25rem;
-                padding: 0 1.25rem;
+                margin-left: calc(var(--code-padding-x) * -1);
+                margin-right: calc(var(--code-padding-x) * -1);;
+                padding: 0 var(--code-padding-x);
             }
 
             &.diff.remove {

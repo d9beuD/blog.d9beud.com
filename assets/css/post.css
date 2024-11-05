@@ -46,10 +46,10 @@ article blockquote p:last-child {
 }
 article a {
   color: var(--link);
+  text-decoration: underline;
 }
 article a:hover {
   color: var(--link-hover);
-  text-decoration: underline;
 }
 article img {
   background-color: #f8fafc;
@@ -64,32 +64,34 @@ article code:not(:is(pre code)) {
   word-break: break-word;
 }
 article pre {
+  --code-line-height: 1.7rem;
+  --code-padding-x: 1.5rem;
   border-width: 1px !important;
   background-color: #f8fafc !important;
-  padding: 0.5rem 0;
   position: relative;
-  overflow-x: auto;
-  margin-left: -2rem;
-  margin-right: -2rem;
-  display: block;
-}
-article pre code {
-  display: block;
-  background-color: transparent;
-  width: fit-content;
-  min-width: 100%;
+  padding: 0.5rem 0;
+  direction: ltr;
+  text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  padding: 0 1.25rem;
-  line-height: 1.7rem;
-  font-size: 0.9rem;
+  tab-size: 4;
   hyphens: none;
+  overflow-x: auto;
+}
+article pre code {
+  display: block;
+  padding: 0 var(--code-padding-x);
+  width: fit-content;
+  min-width: 100%;
+  line-height: var(--code-line-height);
+  font-size: 0.875rem;
 }
 article pre .line {
   display: block;
-  height: 1.7rem;
+  height: var(--code-line-height);
+  white-space: pre;
 }
 article pre .line.highlighted {
   background-color: rgba(var(--highlighted), 0.1);
@@ -102,9 +104,9 @@ article pre .line.highlighted.warning {
 }
 article pre .line.highlighted, article pre .line.diff {
   min-width: calc(100% + 2.5rem);
-  margin-left: -1.25rem;
-  margin-right: -1.25rem;
-  padding: 0 1.25rem;
+  margin-left: calc(var(--code-padding-x) * -1);
+  margin-right: calc(var(--code-padding-x) * -1);
+  padding: 0 var(--code-padding-x);
 }
 article pre .line.diff.remove {
   background-color: rgba(var(--deleted), 0.2);

@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Log your users in with Google OAuth, API Platform and Vue.js" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-04-23T18:22:47+02:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-11-05T17:51:54+01:00","datePublished":"2024-04-19T20:43:00+02:00","description":"I recently started a new project using Symfony 7, API Platform and Vue.js 3. I wanted to allow users to log in or register with their Google account. Here is how I did it.","headline":"Log your users in with Google OAuth, API Platform and Vue.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"},"url":"https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -83,7 +83,8 @@
                         <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-2">
                             <div class="flex gap-x-2 md:flex-col items-center flex-wrap">
                                 <div class="aspect-square w-16 md:w-32 rounded-full overflow-hidden">
-                                    <img src="/assets/img/vbathelier.webp" alt="Author picture" class="object-contain">
+                                    
+                                    <img src="/assets/img/vbathelier-128w.webp" alt="Author picture" class="object-contain" width="128" height="128">
                                 </div>
                                 <div class="flex-1">
                                     <h2 class="font-bold">Vincent BATHELIER</h2>
@@ -162,88 +163,33 @@
 
 <p>First, let’s install <code>HWIOAuthBundle</code> in our Symfony project:</p>
 
-<pre><code class="language-bash">composer require hwi/oauth-bundle
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">composer</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> require</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> hwi/oauth-bundle</span></span></code></pre>
+</div>
 
 <p>Thanks to the Symfony Flex recipe, the bundle is now installed and configured to work with Symfony. We need to configure our OAuth provider, Google in our case. Here is the configuration I used:</p>
 
-<pre><code class="language-yml"># config/packages/hwi_oauth.yaml
-hwi_oauth:
-  resource_owners:
-    google:
-      type:                google
-      client_id:           '%env(GOOGLE_ID)%'
-      client_secret:       '%env(GOOGLE_SECRET)%'
-      scope:               "email profile"
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/hwi_oauth.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">hwi_oauth</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  resource_owners</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    google</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:                </span><span style="color:#032F62;--shiki-dark:#9ECBFF">google</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      client_id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:           </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'%env(GOOGLE_ID)%'</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      client_secret</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:       </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'%env(GOOGLE_SECRET)%'</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      scope</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:               </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"email profile"</span></span></code></pre>
+</div>
 
 <p>Because I don’t want to share my Google credentials in version control, I used environment variables. You can set them in your <code>.env</code> or <code>.env.local</code> file:</p>
 
-<pre><code class="language-sh"># .env.local
-GOOGLE_ID='your_google_client_id'
-GOOGLE_SECRET='your_google_client_secret'
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># .env.local</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">GOOGLE_ID</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'your_google_client_id'</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">GOOGLE_SECRET</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'your_google_client_secret'</span></span></code></pre>
+</div>
 
 <p>Now, to make our user able to log in with Google, we need to set up a firewall in our <code>security.yaml</code>:</p>
 
-<pre><code class="language-yml"># config/packages/security.yaml
-security:
-  firewalls:
-    main:
-      pattern: ^/
-      lazy: true
-      provider: app_user_provider
-
-      oauth: // [!code highlight:10]
-        resource_owners:
-          google: /login/check-google # This route must be defined in your routes.yaml
-        login_path: /auth/login # This one too
-        use_forward: false
-        failure_path: hwi_oauth_connect_registration
-        oauth_user_provider:
-          service: hwi_oauth.user.provider.entity
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-highlighted" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/security.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  firewalls</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      pattern</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">^/</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      lazy</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      provider</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">app_user_provider</span></span><span class="line"></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">      oauth</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">        resource_owners</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">          google</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">/login/check-google</span><span style="color:#6A737D;--shiki-dark:#6A737D"> # This route must be defined in your routes.yaml</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">        login_path</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">/auth/login</span><span style="color:#6A737D;--shiki-dark:#6A737D"> # This one too</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">        use_forward</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">        failure_path</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">hwi_oauth_connect_registration</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">        oauth_user_provider</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line highlighted"><span style="color:#22863A;--shiki-dark:#85E89D">          service</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">hwi_oauth.user.provider.entity</span></span></code></pre>
+</div>
 
 <p>Say the user successfully logs in with Google, <code>HWIOAuthBundle</code> needs a service that is able to load users based on the user response of the OAuth endpoint. As I am using Doctrine ORM to store my users, I chose the <code>hwi_oauth.user.provider.entity</code> service.</p>
 
-<pre><code class="language-yml"># config/services.yaml
-services:
-  # ... other services
-  hwi_oauth.user.provider.entity:
-    class: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider
-    arguments:
-      $class: App\Entity\User
-      $properties:
-        'google': 'googleId'
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/services.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">services</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  # ... other services</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  hwi_oauth.user.provider.entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    arguments</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      $class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">App\Entity\User</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      $properties</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'google'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'googleId'</span></span></code></pre>
+</div>
 
 <p>It will only work if our <code>User</code> entity implements the <code>HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProviderInterface</code>. Here is how I did it:</p>
 
-<pre><code class="language-php">// src/Entity/User.php
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface // [!code --]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthAwareUserProviderInterface // [!code ++]
-{
-    // ...
-
-    #[ORM\Column(length: 255, nullable: true)] // [!code ++:6]
-    private ?string $googleId = null;
-
-    #[Groups(['user:read'])]
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $avatar = null;
-
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface { // [!code ++:9]
-        $this-&gt;setEmail($response-&gt;getEmail());
-        $this-&gt;setFirstname($response-&gt;getFirstName());
-        $this-&gt;setLastname($response-&gt;getLastName());
-        $this-&gt;setAvatar($response-&gt;getProfilePicture());
-        $this-&gt;setGoogleId($response-&gt;getUserIdentifier());
-
-        return $this;
-    }
-}
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/Entity/User.php</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">#[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">repositoryClass</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">UserRepository</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line diff remove"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> User</span><span style="color:#D73A49;--shiki-dark:#F97583"> implements</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> UserInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">PasswordAuthenticatedUserInterface</span></span><span class="line diff add"><span style="color:#6F42C1;--shiki-dark:#B392F0">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> User</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> implements</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> UserInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">PasswordAuthenticatedUserInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">OAuthAwareUserProviderInterface</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // ...</span></span><span class="line"></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">255</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">nullable</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)] </span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $googleId </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line diff add"></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">Groups</span><span style="color:#24292E;--shiki-dark:#E1E4E8">([</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'user:read'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">])]</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">Types</span><span style="color:#D73A49;--shiki-dark:#F97583">::</span><span style="color:#005CC5;--shiki-dark:#79B8FF">TEXT</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">nullable</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $avatar </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> loadUserByOAuthUserResponse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">UserResponseInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> UserInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setEmail</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getEmail</span><span style="color:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setFirstname</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getFirstName</span><span style="color:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setLastname</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getLastName</span><span style="color:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setAvatar</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getProfilePicture</span><span style="color:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setGoogleId</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getUserIdentifier</span><span style="color:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line diff add"></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">        return</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
 
 <p>At this point, you should be able to log your users in with Google. Great! But we do not have a JWT token yet, and it is necessary for the frontend to authenticate with our API.</p>
 
@@ -251,61 +197,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthAw
 
 <p>To generate a JWT token, we will use <code>lexik/jwt-authentication-bundle</code>. You can read the API Platform <a href="https://api-platform.com/docs/core/jwt/">JWT documentation</a> or follow this guide which is simplified. Let’s install it:</p>
 
-<pre><code class="language-bash">composer require lexik/jwt-authentication-bundle
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">composer</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> require</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> lexik/jwt-authentication-bundle</span></span></code></pre>
+</div>
 
 <p>JWT tokens are secure because they are signed with a secret key. We need to generate a key pair:</p>
 
-<pre><code class="language-bash">symfony console lexik:jwt:generate-keypair
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">symfony</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> console</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> lexik:jwt:generate-keypair</span></span></code></pre>
+</div>
 
 <p>Now, let’s configure a new firewall in our <code>security.yaml</code> for the JWT token:</p>
 
-<pre><code class="language-yml"># config/packages/security.yaml
-security:
-  firewalls:
-    api: // [!code ++:5]
-      pattern: ^/api/
-      stateless: true
-      provider: app_user_provider
-      jwt: ~
-    main:
-      # Same as before here
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/security.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  firewalls</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">    api</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">      pattern</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">^/api/</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">      stateless</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">      provider</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">app_user_provider</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">      jwt</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">~</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">      # Same as before here</span></span></code></pre>
+</div>
 
 <p>If you configured a <code>json_login</code> firewall, you can set the success and failure handlers to the following:</p>
 
-<pre><code class="language-yml"># config/packages/security.yaml
-security:
-  firewalls:
-    api: # ...
-    main:
-      # ...
-      json_login:
-        # ...
-        success_handler: lexik_jwt_authentication.handler.authentication_success // [!code ++:2]
-        failure_handler: lexik_jwt_authentication.handler.authentication_failure
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/security.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  firewalls</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    api</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#6A737D;--shiki-dark:#6A737D"># ...</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">      # ...</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      json_login</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">        # ...</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">        success_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">lexik_jwt_authentication.handler.authentication_success</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">        failure_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">lexik_jwt_authentication.handler.authentication_failure</span></span></code></pre>
+</div>
 
 <h2 id="make-hwioauthbundle-return-a-jwt-token">Make <code>HWIOAuthBundle</code> return a JWT token</h2>
 
 <p>Based on the previous code example, my guess was that setting the <code>success_handler</code> in the <code>oauth</code> configuration would make <code>HWIOAuthBundle</code> return a JWT token. And it did! Here is the updated <code>security.yaml</code>:</p>
 
-<pre><code class="language-yml"># config/packages/security.yaml
-security:
-  firewalls:
-    main:
-      # ...
-      oauth:
-        # ...
-        success_handler: lexik_jwt_authentication.handler.authentication_success // [!code ++:2]
-        failure_handler: lexik_jwt_authentication.handler.authentication_failure
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/security.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  firewalls</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">      # ...</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      oauth</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">        # ...</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">        success_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">lexik_jwt_authentication.handler.authentication_success</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">        failure_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">lexik_jwt_authentication.handler.authentication_failure</span></span></code></pre>
+</div>
 
 <p>Now, when we go to <code>/connect/google</code> and log in with Google, we get a JWT token in the response. But we can’t use it yet because we need to send it back to the frontend.</p>
 
-<pre><code>{ "token": "..." }
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>{ "token": "..." }</span></span></code></pre>
+</div>
 
 <h2 id="retrieve-the-jwt-token-from-the-backend">Retrieve the JWT token from the backend</h2>
 
@@ -315,128 +235,42 @@ security:
 
 <p>To handle authentication, I created an <code>auth</code> store based on <a href="https://pinia.vuejs.org">Pinia</a>:</p>
 
-<pre><code class="language-ts">// src/stores/auth.ts
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
-export const useAuthStore = defineStore('auth', () =&gt; {
-  const jwt = ref&lt;string | null&gt;(null)
-  const currentUser = ref&lt;User | null&gt;(null)
-
-  return { jwt, currentUser }
-})
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/stores/auth.ts</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { defineStore } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'pinia'</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { ref } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'vue'</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> useAuthStore</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> defineStore</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'auth'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> jwt</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">string</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> currentUser</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">User</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { jwt, currentUser }</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">})</span></span></code></pre>
+</div>
 
 <p>Now, we need to call the <code>/connect/google</code> endpoint from our Vue.js application in a new window:</p>
 
-<pre><code class="language-ts">export const useAuthStore = defineStore('auth', () =&gt; {
-  // ...
-  const loginWith = async (service: 'google') =&gt; { // [!code ++:3]
-    window.open(`http://localhost/connect/${service}`)
-  }
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> useAuthStore</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> defineStore</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'auth'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  // ...</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> loginWith</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#D73A49;--shiki-dark:#F97583"> async</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">service</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'google'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    window.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">open</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">`http://localhost/connect/${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">service</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"></span><span class="line diff remove"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { jwt, currentUser } </span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { jwt, currentUser, loginWith } </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">})</span></span></code></pre>
+</div>
 
-  return { jwt, currentUser } // [!code --]
-  return { jwt, currentUser, loginWith } // [!code ++]
-})
-</code></pre>
-
-<pre><code class="language-vue">&lt;script lang="ts" setup&gt;
-  import { useAuthStore } from '@/stores/auth'
-  const authStore = useAuthStore()
-&lt;/script&gt;
-
-&lt;template&gt;
-  &lt;button @click="authStore.loginWith('google')"&gt;Login with Google&lt;/button&gt;
-&lt;/template&gt;
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> lang</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ts"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> setup</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { useAuthStore } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> '@/stores/auth'</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> authStore</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useAuthStore</span><span style="color:#24292E;--shiki-dark:#E1E4E8">()</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">template</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> @</span><span style="color:#6F42C1;--shiki-dark:#B392F0">click</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">authStore.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">loginWith</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'google'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;Login with Google&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">template</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+</div>
 
 <p>Now, when the user clicks the “Login with Google” button, a new window opens to the <code>/connect/google</code> endpoint. The user logs in with Google, and the backend sends back a JWT token in the response.</p>
 
 <p>As of now, we can’t catch the response in the frontend because the new window is on a different domain. We need to use the <code>postMessage</code> API to send the JWT token from the backend to the frontend.</p>
 
-<pre><code class="language-ts">// src/stores/auth.ts
-const loginWith = async (service: 'google') =&gt; {
-  window.open(`http://localhost/connect/${service}`)
-  window.addEventListener('message', receiveMessage) // [!code ++]
-}
-
-const receiveMessage = (event: MessageEvent) =&gt; { // [!code ++:7]
-  if (event.data.type === 'authentication') {
-    jwt.value = event.data.token
-    window.removeEventListener('message', receiveMessage)
-    loadCurrentUser()
-  }
-}
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/stores/auth.ts</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> loginWith</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#D73A49;--shiki-dark:#F97583"> async</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">service</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'google'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  window.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">open</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">`http://localhost/connect/${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">service</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">  window.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'message'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, receiveMessage) </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span><span class="line"></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> receiveMessage</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> MessageEvent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (event.data.type </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'authentication'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    jwt.value </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> event.data.token</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    window.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">removeEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'message'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, receiveMessage)</span></span><span class="line diff add"><span style="color:#6F42C1;--shiki-dark:#B392F0">    loadCurrentUser</span><span style="color:#24292E;--shiki-dark:#E1E4E8">()</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
 
 <p>The Lxik JWT bundle sends the JWT token in the response with the <code>application/json</code> content type. If we want to use the <code>postMessage</code> API, we need to send the response with the <code>text/html</code> content type and add the required script to the response.</p>
 
 <p>To do that, we need to create a custom response handler that uses the <code>lexik_jwt_authentication.handler.authentication_success</code> service. Here is how I did it:</p>
 
-<pre><code class="language-php">// src/Security/OAuthJwtSuccessHandler.php
-namespace App\Security;
-
-use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
-
-class OAuthJwtSuccessHandler implements AuthenticationSuccessHandlerInterface
-{
-    public function __construct(
-        // This is auto injected by Symfony
-        private AuthenticationSuccessHandler $jwtSuccessHandler, // [!code highlight]
-    ) {
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response {
-        $response = $this-&gt;jwtSuccessHandler-&gt;onAuthenticationSuccess($request, $token); // [!code highlight]
-        $body = json_decode($response-&gt;getContent(), true);
-        $jwt = $body['token'];
-
-        return new Response('&lt;html&gt;&lt;body&gt;&lt;script&gt;
-            window.opener.postMessage({
-                type: \'authentication\',
-                token: ' . json_encode($jwt) . ', // [!code highlight]
-            }, \'*\');
-            window.close(); // [!code highlight]
-        &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;');
-    }
-}
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-highlighted" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/Security/OAuthJwtSuccessHandler.php</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">namespace</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> App\Security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Symfony\Component\HttpFoundation\Request</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Symfony\Component\Security\Core\Authentication\Token\TokenInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Symfony\Component\HttpFoundation\Response</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> OAuthJwtSuccessHandler</span><span style="color:#D73A49;--shiki-dark:#F97583"> implements</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> AuthenticationSuccessHandlerInterface</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> __construct</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">        // This is auto injected by Symfony</span></span><span class="line highlighted"><span style="color:#D73A49;--shiki-dark:#F97583">        private</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> AuthenticationSuccessHandler</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $jwtSuccessHandler, </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    ) {</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> onAuthenticationSuccess</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">Request</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $request, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">TokenInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $token)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#005CC5;--shiki-dark:#79B8FF">Response</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line highlighted"><span style="color:#24292E;--shiki-dark:#E1E4E8">        $response </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">jwtSuccessHandler</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">onAuthenticationSuccess</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($request, $token); </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        $body </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> json_decode</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getContent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(), </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        $jwt </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $body[</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'token'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        return</span><span style="color:#D73A49;--shiki-dark:#F97583"> new</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Response</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'&#x3C;html&gt;&#x3C;body&gt;&#x3C;script&gt;</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">            window.opener.postMessage({</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">                type: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">\'</span><span style="color:#032F62;--shiki-dark:#9ECBFF">authentication</span><span style="color:#005CC5;--shiki-dark:#79B8FF">\'</span><span style="color:#032F62;--shiki-dark:#9ECBFF">,</span></span><span class="line highlighted"><span style="color:#032F62;--shiki-dark:#9ECBFF">                token: '</span><span style="color:#D73A49;--shiki-dark:#F97583"> .</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> json_encode</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($jwt) </span><span style="color:#D73A49;--shiki-dark:#F97583">.</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ',</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">            }, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">\'</span><span style="color:#032F62;--shiki-dark:#9ECBFF">*</span><span style="color:#005CC5;--shiki-dark:#79B8FF">\'</span><span style="color:#032F62;--shiki-dark:#9ECBFF">);</span></span><span class="line highlighted"><span style="color:#032F62;--shiki-dark:#9ECBFF">            window.close();</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        &#x3C;/script&gt;&#x3C;/body&gt;&#x3C;/html&gt;'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
 
 <p>Notice how I replaced the <code>JWTAuthenticationBundle</code> response with a custom one with the bare minimum to send the JWT token to the frontend. Also, the window will close itself once the token is sent.</p>
 
 <p>Now, we need to configure this new handler in our <code>security.yaml</code>:</p>
 
-<pre><code class="language-yml"># config/packages/security.yaml
-security:
-  firewalls:
-    main:
-      # ...
-      oauth:
-        # ...
-        success_handler: lexik_jwt_authentication.handler.authentication_success // [!code --]
-        success_handler: App\Security\OAuthJwtSuccessHandler # This is our custom handler // [!code ++]
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/packages/security.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">security</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  firewalls</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">      # ...</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      oauth</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">        # ...</span></span><span class="line diff remove"><span style="color:#22863A;--shiki-dark:#85E89D">        success_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">lexik_jwt_authentication.handler.authentication_success</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">        success_handler</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">App\Security\OAuthJwtSuccessHandler</span><span style="color:#6A737D;--shiki-dark:#6A737D"> # This is our custom handler</span></span></code></pre>
+</div>
 
 <p>Now, when the user logs in with Google, the backend sends the JWT token to the frontend using the <code>postMessage</code> API. The frontend can now store the JWT token in the <code>localStorage</code> and use it to authenticate with the API.</p>
 
-<pre><code class="language-ts">// src/stores/auth.ts
-const jwt = ref&lt;string | null&gt;(null) // [!code --:2]
-const currentUser = ref&lt;User | null&gt;(null)
-const stored = JSON.parse(localStorage.getItem('auth') || 'null') // [!code ++:3]
-const jwt = ref&lt;string | null&gt;(stored ? stored.jwt : null)
-const currentUser = ref&lt;User | null&gt;(stored ? stored.currentUser : null)
-
-// ...
-
-// Any time the JWT token or the current user changes, we store them in the localStorage
-watch([jwt, currentUser], () =&gt; {  // [!code ++:3]
-  localStorage.setItem('auth', JSON.stringify({ jwt: jwt.value, currentUser: currentUser.value }))
-})
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/stores/auth.ts</span></span><span class="line diff remove"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> jwt</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">string</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span></span><span class="line diff remove"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> currentUser</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">User</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> stored</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> JSON</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">parse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(localStorage.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getItem</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'auth'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">||</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'null'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> jwt</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">string</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(stored </span><span style="color:#D73A49;--shiki-dark:#F97583">?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> stored.jwt </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> currentUser</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ref</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">User</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&gt;(stored </span><span style="color:#D73A49;--shiki-dark:#F97583">?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> stored.currentUser </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// ...</span></span><span class="line"></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// Any time the JWT token or the current user changes, we store them in the localStorage</span></span><span class="line diff add"><span style="color:#6F42C1;--shiki-dark:#B392F0">watch</span><span style="color:#24292E;--shiki-dark:#E1E4E8">([jwt, currentUser], () </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {  </span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">  localStorage.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setItem</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'auth'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">JSON</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">stringify</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ jwt: jwt.value, currentUser: currentUser.value }))</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">})</span></span></code></pre>
+</div>
 
 <p>Congrats! You now have a way to log your users in with Google OAuth and authenticate them with your API using a JWT token.</p>
 
@@ -448,56 +282,20 @@ watch([jwt, currentUser], () =&gt; {  // [!code ++:3]
 
 <p>Also, when I tried to buypass the form step, I got this error:</p>
 
-<pre><code>Account could not be linked correctly. // [!code error]
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-highlighted" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line highlighted error"><span>Account could not be linked correctly.</span></span></code></pre>
+</div>
 
 <p>After hours of debugging and searching online, I gave up using this <code>connect</code> feature. However, I found that the class <a href="https://github.com/hwi/HWIOAuthBundle/blob/c9cd9f2ffa55a353b6902eb811315ebd3782d3bd/src/Security/Core/User/EntityUserProvider.php"><code>EntityUserProvider.php</code></a> from <code>HWIOAuthBundle</code> was in charge of retrieving the user from the database. I decided to override it to create a new user if it doesn’t exist instead of throwing an exception.</p>
 
 <p>I won’t print the whole class here, but you can find it in the link above. Here is the part I changed:</p>
 
-<pre><code class="language-php">// src/Security/EntityUserProvider.php
-public function loadUserByOAuthUserResponse(UserResponseInterface $response): ?UserInterface
-{
-    $resourceOwnerName = $response-&gt;getResourceOwner()-&gt;getName();
-
-    if (!isset($this-&gt;properties[$resourceOwnerName])) {
-        throw new \RuntimeException(sprintf("No property defined for entity for resource owner '%s'.", $resourceOwnerName));
-    }
-
-    $username = method_exists($response, 'getUserIdentifier') ? $response-&gt;getUserIdentifier() : $response-&gt;getUserIdentifier();
-    if (null === $user = $this-&gt;findUser([$this-&gt;properties[$resourceOwnerName] =&gt; $username])) {
-        throw $this-&gt;createUserNotFoundException($username, sprintf("User '%s' not found.", $username)); // [!code --]
-        $user = $this-&gt;registerUser($response); // [!code ++]
-    }
-
-    return $user;
-}
-
-private function registerUser(UserResponseInterface $response): UserInterface // [!code ++:9]
-{
-    /** @var User */
-    $user = new $this-&gt;class();
-    $user-&gt;loadUserByOAuthUserResponse($response);
-    $this-&gt;em-&gt;persist($user);
-    $this-&gt;em-&gt;flush();
-
-    return $user;
-}
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// src/Security/EntityUserProvider.php</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">public</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> loadUserByOAuthUserResponse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">UserResponseInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#005CC5;--shiki-dark:#79B8FF">UserInterface</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    $resourceOwnerName </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getResourceOwner</span><span style="color:#24292E;--shiki-dark:#E1E4E8">()</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getName</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#005CC5;--shiki-dark:#79B8FF">isset</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">$this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">properties[$resourceOwnerName])) {</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        throw</span><span style="color:#D73A49;--shiki-dark:#F97583"> new</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> \RuntimeException</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">sprintf</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"No property defined for entity for resource owner '%s'."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, $resourceOwnerName));</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    $username </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> method_exists</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'getUserIdentifier'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getUserIdentifier</span><span style="color:#24292E;--shiki-dark:#E1E4E8">() </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getUserIdentifier</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#005CC5;--shiki-dark:#79B8FF">null</span><span style="color:#D73A49;--shiki-dark:#F97583"> ===</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $user </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">findUser</span><span style="color:#24292E;--shiki-dark:#E1E4E8">([</span><span style="color:#005CC5;--shiki-dark:#79B8FF">$this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">properties[$resourceOwnerName] </span><span style="color:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $username])) {</span></span><span class="line diff remove"><span style="color:#D73A49;--shiki-dark:#F97583">        throw</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">createUserNotFoundException</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($username, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">sprintf</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"User '%s' not found."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, $username)); </span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">        $user </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">registerUser</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response); </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $user;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span><span class="line"></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">private</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> registerUser</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">UserResponseInterface</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $response)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> UserInterface</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">    /** </span><span style="color:#D73A49;--shiki-dark:#F97583">@var</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> User</span><span style="color:#6A737D;--shiki-dark:#6A737D"> */</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    $user </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#D73A49;--shiki-dark:#F97583"> new</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    $user</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">loadUserByOAuthUserResponse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($response);</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">    $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">em</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">persist</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($user);</span></span><span class="line diff add"><span style="color:#005CC5;--shiki-dark:#79B8FF">    $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">em</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">flush</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line diff add"></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $user;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
 
 <p>Still, we need to tell <code>HWIOAuthBundle</code> to use our custom <code>EntityUserProvider</code> service. Here is how I did it:</p>
 
-<pre><code class="language-yml"># config/services.yaml
-services:
-  # ... other services
-  hwi_oauth.user.provider.entity:
-    class: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider // [!code --]
-    class: App\Security\EntityUserProvider // [!code ++]
-    arguments:
-      $class: App\Entity\User
-      $properties:
-        'google': 'googleId'
-</code></pre>
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># config/services.yaml</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">services</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  # ... other services</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">  hwi_oauth.user.provider.entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line diff remove"><span style="color:#22863A;--shiki-dark:#85E89D">    class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider</span></span><span class="line diff add"><span style="color:#22863A;--shiki-dark:#85E89D">    class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">App\Security\EntityUserProvider</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">    arguments</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      $class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">App\Entity\User</span></span><span class="line"><span style="color:#22863A;--shiki-dark:#85E89D">      $properties</span><span style="color:#24292E;--shiki-dark:#E1E4E8">:</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'google'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'googleId'</span></span></code></pre>
+</div>
 
 <p>And finally, if our users logged in with Google aren’t registered in our database yet, they will automatically be.</p>
 
@@ -522,52 +320,6 @@ services:
     </div>
 </footer>
 
-<script type="module">
-    import { getHighlighterCore } from 'https://esm.run/shiki@1.3/dist/core.mjs'
-    import getWasm from 'https://esm.run/shiki@1.3/wasm'
-
-    import githubLight from 'https://esm.run/shiki@1.3/themes/github-light.mjs'
-    import githubDark from 'https://esm.run/shiki@1.3/themes/github-dark.mjs'
-
-    import php from 'https://esm.run/shiki@1.3/langs/php.mjs'
-    import yml from 'https://esm.run/shiki@1.3/langs/yaml.mjs'
-    import shell from 'https://esm.run/shiki@1.3/langs/shellscript.mjs'
-    import ts from 'https://esm.run/shiki@1.3/langs/typescript.mjs'
-    import vue from 'https://esm.run/shiki@1.3/langs/vue.mjs'
-
-    import {
-        transformerNotationDiff,
-        transformerNotationHighlight,
-        transformerNotationErrorLevel,
-        transformerRemoveLineBreak,
-    } from 'https://cdn.jsdelivr.net/npm/@shikijs/transformers@1.3.0/+esm'
-    
-    const highlighter = await getHighlighterCore({
-        themes: [githubLight, githubDark],
-        langs: [php, yml, shell, ts, vue],
-        loadWasm: getWasm,
-    })
-
-    document.querySelectorAll('pre').forEach(async (pre) => {
-        const code = pre.querySelector('code')
-        // get language name from class name without the 'language' prefix
-        const language = code.className.replace('language-', '')
-        const html = await highlighter.codeToHtml(code.textContent.trim(), {
-            lang: language,
-            themes: {
-                light: 'github-light',
-                dark: 'github-dark'
-            },
-            transformers: [
-                transformerNotationDiff(),
-                transformerNotationHighlight(),
-                transformerNotationErrorLevel(),
-                transformerRemoveLineBreak(),
-            ]
-        })
-        pre.outerHTML = html
-    })
-</script>
 <script src="/assets/scripts/navbar.js"></script>
 
 </body>

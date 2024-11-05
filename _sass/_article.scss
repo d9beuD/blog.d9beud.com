@@ -47,10 +47,10 @@ article {
 
     a {
         color: var(--link);
+        text-decoration: underline;
 
         &:hover {
             color: var(--link-hover);
-            text-decoration: underline;
         }
     }
 

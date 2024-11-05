@@ -4,9 +4,9 @@
     date: 2024-04-19 20:43:00 +02:00
 ---
 
-I recently started a new project using **Symfony 7**, **API Platform** and **Vue.js 3**. I wanted to allow users to log in or register with their Google account. Here is how I did it.
+I recently started a new project using **Symfony 7**, **API Platform**, and **Vue.js 3**. I wanted to allow users to log in or register with their Google account. Here is how I did it.
 
-First, like you probably did, I looked online for a bundle that would help me with that. I found [`knpuniversity/oauth2-client-bundle`](https://github.com/knpuniversity/oauth2-client-bundle) wich was promising. Reading in their `README.md`, I saw the following:
+First, like you probably did, I looked online for a bundle that would help me with that. I found [`knpuniversity/oauth2-client-bundle`](https://github.com/knpuniversity/oauth2-client-bundle) which was promising. Reading in their `README.md`, I saw the following:
 
 > Not sure which to use? If you need OAuth (social) authentication & registration, try [hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle). If you don't like it, come back!
 
@@ -16,9 +16,9 @@ So what they say is that `HWIOAuthBundle` is exactly what I need? Yeah, but no. 
 
 The idea is to use `HWIOAuthBundle` to authenticate users with Google. Once authenticated, we will generate a JWT token with [`lexik/jwt-authentication-bundle`](https://github.com/lexik/LexikJWTAuthenticationBundle) and send it back to the user. The user will then use this token to authenticate with our API.
 
-It works great if the Symfony application is handling the frontend. But in our case, **we are using Vue.js**. The problem is that OAuth applications are not allowed to have multiple redirect URIs (it's the URI where the OAuth server respond with its access token). So we can't have one for the Symfony application and one for the Vue.js application.
+It works great if the Symfony application is handling the frontend. But in our case, **we are using Vue.js**. The problem is that OAuth applications are not allowed to have multiple redirect URIs (it's the URI where the OAuth server responds with its access token). So we can't have one for the Symfony application and one for the Vue.js application.
 
-Because the Oauth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirect to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.
+Because the OAuth process is handled by the Symfony application, when the user triggers the login with Google from the Vue.js frontend, we need to open a new window to the backend. The backend will redirect to the Google SSO page, allowing the user to enter its credentials. Once the user is authenticated, Google redirects to the backend with an access token within query parameters, then the backend will send the JWT token back to the frontend.
 
 [![](https://mermaid.ink/svg/pako:eNp9kLFOAzEMhl_F8sJA7wUydChIRQgJpIJYbjGJ256ac0KcqEJV352kd4BgIEPkX_6c_P5PaINjNKj8Xlgs3w60SzT2AvWsUjgqp265nCsDL_UG6wd7UOjxJoiwzXAc8h7WIew89_h39vopxBINPEYWhRhiV-LEXBqNWJE9sDgDD4Gcwtsk54cm0Ux8UWvOOn93pZBYYxDlf3DhRJnh_vX5N1Spbna3qVp_iMla63-vfkfiPF8YXODIaaTB1ehObaLHvOexbm9q6XhLxecWxbmiVHLYfIhFk1PhBZboqps5aTRb8srnT4F_gyA)](https://mermaid.live/edit#pako:eNp9kL1uQjEMhV_F8tIBeIEMDLQSVVWJSlB1uYubGLgi10njRKhCvHsDN_0RQzNEPvIX5_ic0AbHaFD5o7BYfuhpl2joBOpZpHBUTrP5fNJKA6_1But7e1Do8D6IsM1w7PMeliHsPHd4-_glxBINrCKLQgxxVuKIXBsVWJA9sDgDz4Gcwvso25hR_KWWnLV9dqeQWGMQ5X9w4USZ4eltcws1a-uq9Lf_4-t76UcS5_lK4BQHTgP1rqZ2uvAd5j0PdW9TS8dbKj5fQjhXlEoO60-xaHIqPMUSXXXSQkazJa98_gJgh4JB)
 
@@ -177,7 +177,7 @@ security:
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
 ```
 
-Now, when we go to `/connect/google` and log in with Google, we get a JWT token in the response. But we can't use it yet because we need to send it back to the frontend.
+Now, when we visit the URL `/connect/google` and log in using Google, we receive a JSON Web Token (JWT) in the response. However, we cannot utilize it immediately because we need to send it back to the frontend.
 
 ```
 { "token": "..." }
@@ -185,9 +185,9 @@ Now, when we go to `/connect/google` and log in with Google, we get a JWT token 
 
 ## Retrieve the JWT token from the backend
 
-Our frontend is a Vue.js application hosted on a different domain than our Symfony application. We can't use cookies to store the JWT token because of the [SameSite cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite). We will use the `localStorage` to store the JWT token.
+Our frontend is a Vue.js application hosted on a different domain from our Symfony application. Due to the [SameSite cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite), we can’t use cookies to store the JWT token. Instead, we’ll store the JWT token in `localStorage`.
 
-Examples I'll show you are adapted for Vue.js 3 but it's easily adaptable to any JavaScript framework.
+The examples I’ll provide are adapted for Vue.js 3, but they’re easily adaptable to any JavaScript framework.
 
 To handle authentication, I created an `auth` store based on [Pinia](https://pinia.vuejs.org):
 
@@ -229,9 +229,9 @@ export const useAuthStore = defineStore('auth', () => {
 </template>
 ```
 
-Now, when the user clicks the "Login with Google" button, a new window opens to the `/connect/google` endpoint. The user logs in with Google, and the backend sends back a JWT token in the response. 
+Now, when the user clicks the « Login with Google » button, a new window opens, redirecting the user to the `/connect/google` endpoint. The user authenticates with Google, and the backend responds with a JWT token.
 
-As of now, we can't catch the response in the frontend because the new window is on a different domain. We need to use the `postMessage` API to send the JWT token from the backend to the frontend.
+Currently, we can’t intercept the response in the frontend because the new window is on a different domain. To resolve this, we need to utilize the `postMessage` API to send the JWT token from the backend to the frontend.
 
 ```ts
 // src/stores/auth.ts
@@ -249,9 +249,9 @@ const receiveMessage = (event: MessageEvent) => { // [!code ++:7]
 }
 ```
 
-The Lxik JWT bundle sends the JWT token in the response with the `application/json` content type. If we want to use the `postMessage` API, we need to send the response with the `text/html` content type and add the required script to the response.
+The Lexik JWT bundle sends the JWT token in the response with the `application/json` content type. However, if we intend to use the `postMessage` API, we must send the response with the `text/html` content type and include the necessary script in the response.
 
-To do that, we need to create a custom response handler that uses the `lexik_jwt_authentication.handler.authentication_success` service. Here is how I did it:
+To accomplish this, we need to create a custom response handler that utilizes the `lexik_jwt_authentication.handler.authentication_success` service. Here’s how I implemented it:
 
 ```php
 // src/Security/OAuthJwtSuccessHandler.php
@@ -287,9 +287,9 @@ class OAuthJwtSuccessHandler implements AuthenticationSuccessHandlerInterface
 }
 ```
 
-Notice how I replaced the `JWTAuthenticationBundle` response with a custom one with the bare minimum to send the JWT token to the frontend. Also, the window will close itself once the token is sent.
+Notice how I replaced the `JWTAuthenticationBundle` response with a custom one that includes only the essential elements to send the JWT token to the frontend. Additionally, the window will automatically close itself once the token is transmitted.
 
-Now, we need to configure this new handler in our `security.yaml`:
+Next, we must configure this newly created handler in our `security.yaml` file.
 
 ```yml
 # config/packages/security.yaml
@@ -303,7 +303,7 @@ security:
         success_handler: App\Security\OAuthJwtSuccessHandler # This is our custom handler // [!code ++]
 ```
 
-Now, when the user logs in with Google, the backend sends the JWT token to the frontend using the `postMessage` API. The frontend can now store the JWT token in the `localStorage` and use it to authenticate with the API.
+Now, when a user logs in using Google, the backend sends the JWT token to the frontend using the `postMessage` API. The frontend can then store the JWT token in the `localStorage` and use it to authenticate with the API.
 
 ```ts
 // src/stores/auth.ts
@@ -321,23 +321,23 @@ watch([jwt, currentUser], () => {  // [!code ++:3]
 })
 ```
 
-Congrats! You now have a way to log your users in with Google OAuth and authenticate them with your API using a JWT token.
+Congratulations! You now have a method to log in users with Google OAuth and authenticate them with your API using a JWT token.
 
-But... there is one more thing. Because your new users are not registered in your database yet. 
+However, there’s one additional step. Since your new users aren’t registered in your database yet. 
 
 ## Registering users after OAuth success
 
-`HWIOAuthBundle` provides a way to register users, it's called `connect`. I'm sure it works great, but it relies on Symfony forms and I don't want to use them as I'm using Vue.js instead. I want my users to be registered automatically after they log in with Google.
+The `HWIOAuthBundle` offers a user registration mechanism called `connect`. While I’m confident it functions effectively, it relies on Symfony forms, which I’m refraining from using since I’m opting for Vue.js instead. My intention is to have users automatically registered upon their successful Google login.
 
-Also, when I tried to buypass the form step, I got this error:
+Additionally, when attempting to buypass the form step, I encountered an error.
 
 ```
 Account could not be linked correctly. // [!code error]
 ```
 
-After hours of debugging and searching online, I gave up using this `connect` feature. However, I found that the class [`EntityUserProvider.php`](https://github.com/hwi/HWIOAuthBundle/blob/c9cd9f2ffa55a353b6902eb811315ebd3782d3bd/src/Security/Core/User/EntityUserProvider.php) from `HWIOAuthBundle` was in charge of retrieving the user from the database. I decided to override it to create a new user if it doesn't exist instead of throwing an exception.
+After hours of debugging and searching online, I abandoned using this `connect` feature. However, I discovered that the class [`EntityUserProvider.php`](https://github.com/hwi/HWIOAuthBundle/blob/c9cd9f2ffa55a353b6902eb811315ebd3782d3bd/src/Security/Core/User/EntityUserProvider.php) from `HWIOAuthBundle` was responsible for retrieving the user from the database. Instead of throwing an exception, I decided to override it and create a new user if it didn’t exist.
 
-I won't print the whole class here, but you can find it in the link above. Here is the part I changed:
+I won’t provide the entire class here, but you can find it in the link above. Here’s the part I modified:
 
 ```php
 // src/Security/EntityUserProvider.php
@@ -370,7 +370,7 @@ private function registerUser(UserResponseInterface $response): UserInterface //
 }
 ```
 
-Still, we need to tell `HWIOAuthBundle` to use our custom `EntityUserProvider` service. Here is how I did it:
+Despite this, we must instruct the `HWIOAuthBundle` to utilize our custom `EntityUserProvider` service. Here’s how I accomplished it:
 
 ```yml
 # config/services.yaml
@@ -385,8 +385,8 @@ services:
         'google': 'googleId'
 ```
 
-And finally, if our users logged in with Google aren't registered in our database yet, they will automatically be.
+And finally, if our users log in using Google OAuth and haven’t been registered in our database yet, they’ll be automatically registered.
 
 ## Conclusion
 
-In this article, we saw how to log your users in with Google OAuth and authenticate them with your API using a JWT token. I hope you found it helpful. If you have any questions or feedback, feel free to reach out to me on X ([@d9beuD](https://x.com/d9beuD)).
+In this article, we explored how to log in users with Google OAuth and authenticate them with your API using a JWT token. I hope you found it helpful. If you have any questions or feedback, please don’t hesitate to reach out to me on X ([@d9beuD](https://x.com/d9beuD)).

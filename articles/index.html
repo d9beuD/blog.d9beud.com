@@ -12,17 +12,7 @@
         <ul class="space-y-4 mb-8">
             {% for post in paginator.posts %}
                 <li>
-                    <a href="{{ post.url }}" class="group block md:w-3/4 mx-auto text-slate-600 dark:text-slate-300 relative">
-                        <div class="p-4 rounded-lg dark:bg-slate-800">
-                            <h3 class="group-hover:underline text-xl group-hover:text-slate-900 dark:group-hover:text-slate-100">
-                                {{ post.title }}
-                            </h3>
-                            <div class="mb-4 text-sm">{{ post.date | date_to_string }}</div>
-                            <p>
-                                {{ post.excerpt }}
-                            </p>
-                        </div>
-                    </a>
+                    {% include post-excerpt.html post=post %}
                 </li>
             {% endfor %}
         </ul>

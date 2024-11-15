@@ -1,0 +1,13 @@
+<a href="{{ post.url }}" class="group block md:w-3/4 mx-auto text-slate-600 dark:text-slate-300 relative">
+    <div class="p-4 rounded-lg dark:bg-slate-800">
+        <h3 class="group-hover:underline text-xl font-bold text-slate-900 dark:text-slate-100">
+            {{ post.title }}
+        </h3>
+        <div class="mb-4 text-sm">
+            <span title="{{ post.date | date: "%Y-%m-%d %H:%M" }}">{{ post.date | date_to_string }}</span>
+        </div>
+        <p>
+            {{ post.excerpt }}
+        </p>
+    </div>
+</a>

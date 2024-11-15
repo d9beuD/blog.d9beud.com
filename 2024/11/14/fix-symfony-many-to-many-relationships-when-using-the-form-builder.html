@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Fix Symfony ManyToMany relationships when using the FormBuilder | d9beuD’s Blog</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Fix Symfony ManyToMany relationships when using the FormBuilder" />
+<meta name="author" content="Vincent BATHELIER" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="It’s crucial to consider the relationships between your entities from the very beginning of your project. Failure to do so can result in substantial time wastage later on due to significant refactoring of your code base." />
+<meta property="og:description" content="It’s crucial to consider the relationships between your entities from the very beginning of your project. Failure to do so can result in substantial time wastage later on due to significant refactoring of your code base." />
+<link rel="canonical" href="https://blog.d9beud.com/2024/11/14/fix-symfony-many-to-many-relationships-when-using-the-form-builder.html" />
+<meta property="og:url" content="https://blog.d9beud.com/2024/11/14/fix-symfony-many-to-many-relationships-when-using-the-form-builder.html" />
+<meta property="og:site_name" content="d9beuD’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-14T17:03:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Fix Symfony ManyToMany relationships when using the FormBuilder" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Vincent BATHELIER"},"dateModified":"2024-11-15T09:15:52+01:00","datePublished":"2024-11-14T17:03:00+01:00","description":"It’s crucial to consider the relationships between your entities from the very beginning of your project. Failure to do so can result in substantial time wastage later on due to significant refactoring of your code base.","headline":"Fix Symfony ManyToMany relationships when using the FormBuilder","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.d9beud.com/2024/11/14/fix-symfony-many-to-many-relationships-when-using-the-form-builder.html"},"url":"https://blog.d9beud.com/2024/11/14/fix-symfony-many-to-many-relationships-when-using-the-form-builder.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <title>d9beuD's Blog</title>
+</head>
+<body class="min-h-dvh flex flex-col dark:bg-slate-900 dark:text-slate-50">
+    <header class="border-b dark:border-slate-600 bg-white/50 dark:bg-slate-900/80  backdrop-blur-lg sticky top-0 z-10">
+    <div class="container mx-auto p-2 md:px-4 leading-7">
+        <div class="flex flex-wrap items-center justify-between md:content-start md:gap-x-4">
+            <a href="/" class="font-bold text-lg px-2 md:px-0">d9beuD's Blog</a>
+            <button class="border-2 border-slate-600 rounded md:hidden hover:bg-slate-100 dark:hover:bg-slate-800 mx-2" data-collapse="#main-navbar-collapse">
+                <div class="size-6 px-1 flex flex-col justify-evenly">
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                    <div class="border border-slate-600 rounded max-h-full flex-none"></div>
+                </div>
+            </button>
+            <nav id="main-navbar-collapse" class="min-w-full md:min-w-0 grow transition-all hidden md:flex">
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1 me-auto">
+                    <li>
+    <a 
+        href="/articles" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        Articles
+    </a>
+</li>
+                    <li>
+    <a 
+        href="https://d9beud.com" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        About
+    </a>
+</li>
+                </ul>
+                <ul class="flex flex-col md:flex-row mt-2 md:mt-0 md:gap-x-1">
+                    <li>
+    <a 
+        href="https://github.com/d9beuD" 
+        class="p-2 rounded text-slate-600 dark:text-slate-300 dark:hover:text-slate-50 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all block"
+    >
+        GitHub
+    </a>
+</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="bg-slate-100 dark:bg-slate-800 h-32"></div>
+    
+    <div class="container mx-auto px-4">
+        <div class="my-8 max-w-[1024px] mx-auto grid grid-cols-12 gap-x-8 md:space-y-reverse">
+            <aside class="col-span-12 md:col-span-4 lg:col-span-3 order-1">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold mb-1">About the author</h3>
+                        <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-2">
+                            <div class="flex gap-x-2 md:flex-col items-center flex-wrap">
+                                <div class="aspect-square w-16 md:w-32 rounded-full overflow-hidden">
+                                    
+                                    <img src="/assets/img/vbathelier-256w.webp" alt="Author picture" class="object-contain" width="256" height="256">
+                                </div>
+                                <div class="flex-1">
+                                    <h2 class="font-bold">Vincent BATHELIER</h2>
+                                    <p>
+                                        I am a web developer and I love to share my knowledge with the community.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div>
+                        <h3 class="font-bold mb-1">Tags</h3>
+                        <ul class="flex gap-1 flex-wrap">
+                            
+                            
+                                <li>
+                                    <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 inline-block border rounded-full px-2">doctrine</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 inline-block border rounded-full px-2">form-builder</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 inline-block border rounded-full px-2">php</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 inline-block border rounded-full px-2">symfony</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        
+            <article class="flex-grow col-span-12 md:col-span-8 lg:col-span-9 order-first md:order-2 mb-8 -mt-32 bg-white dark:bg-slate-900 p-4 rounded-md">
+                <div class="mb-8">
+                    <h1 class="text-4xl lg:text-5xl font-bold mb-0">Fix Symfony ManyToMany relationships when using the FormBuilder</h1>
+                    <small class="text-slate-500 text-sm" title="2024-11-14 17:03">14 Nov 2024 • Vincent BATHELIER</small>
+                </div>
+                <p>It’s crucial to consider the relationships between your entities from the very beginning of your project. Failure to do so can result in substantial time wastage later on due to significant refactoring of your code base.</p>
+
+<p>You might have noticed, after generating the CRUD operations for your entities using the <code>make:crud</code> command that <code>ManyToMany</code> relationships in forms don’t work as expected: it is not bidirectional in write operations. Let me illustrate this with a concrete example and explain how to resolve it.</p>
+
+<h2 id="a-basic-manytomany-relationship">A Basic ManyToMany Relationship</h2>
+
+<p>Let’s say we have the following entities. An <code>Article</code> have a title, a content and an author. A <code>Tag</code> have a name and nothing more.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Entity/Article.php</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">namespace</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> App\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> App\Repository\ArticleRepository</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Doctrine\DBAL\Types\Types</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">use</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Doctrine\ORM\Mapping</span><span style="color:#D73A49;--shiki-dark:#F97583"> as</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ORM</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">#[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">repositoryClass</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">ArticleRepository</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Article</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\GeneratedValue</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?int</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $id </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">255</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $title </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">Types</span><span style="color:#D73A49;--shiki-dark:#F97583">::</span><span style="color:#005CC5;--shiki-dark:#79B8FF">TEXT</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $content </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    </span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // getters and setters</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Entity/Tag.php</span></span><span class="line"></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// ...</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">#[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">repositoryClass</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">TagRepository</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Tag</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\GeneratedValue</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?int</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $id </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Column</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">255</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $label </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    </span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // getters and setters</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
+
+<p>An article can have multiple tags and tags can be associated to multiple articles. Therefore, we need to setup a <code>ManyToMany</code> relationship.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Entity/Article.php</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">#[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">repositoryClass</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">ArticleRepository</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Article</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // previous properties</span></span><span class="line"></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">    /**</span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">     * </span><span style="color:#D73A49;--shiki-dark:#F97583">@var</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Collection</span><span style="color:#6A737D;--shiki-dark:#6A737D">&#x3C;</span><span style="color:#D73A49;--shiki-dark:#F97583">int</span><span style="color:#6A737D;--shiki-dark:#6A737D">, Tag&gt;</span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">     */</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\ManyToMany</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">targetEntity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">Tag</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">inversedBy</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'articles'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Collection</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $tags;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    </span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // getters and setters</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Entity/Tag.php</span></span><span class="line"></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// ...</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">#[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\Entity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">repositoryClass</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">TagRepository</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Tag</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // previous properties</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    </span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">    /**</span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">     * </span><span style="color:#D73A49;--shiki-dark:#F97583">@var</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Collection</span><span style="color:#6A737D;--shiki-dark:#6A737D">&#x3C;</span><span style="color:#D73A49;--shiki-dark:#F97583">int</span><span style="color:#6A737D;--shiki-dark:#6A737D">, Article&gt;</span></span><span class="line diff add"><span style="color:#6A737D;--shiki-dark:#6A737D">     */</span></span><span class="line diff add"><span style="color:#24292E;--shiki-dark:#E1E4E8">    #[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">ORM\ManyToMany</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">targetEntity</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">Article</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#6F42C1;--shiki-dark:#B392F0">mappedBy</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'tags'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)]</span></span><span class="line diff add"><span style="color:#D73A49;--shiki-dark:#F97583">    private</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Collection</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $articles;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    </span></span><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">    // getters and setters</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
+
+<p>Our entities are ready, we can now generate the CRUD operations using Symfony commands.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">symfony</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> console</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> make:crud</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> Article</span></span><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">symfony</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> console</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> make:crud</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> Tag</span></span></code></pre>
+</div>
+
+<p>Don’t forget to apply your changes to the database schema.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">symfony</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> console</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> make:migration</span></span><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">symfony</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> console</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> doctrine:migrations:migrate</span></span></code></pre>
+</div>
+
+<p>If you’re familiar with Symfony, you can test the application by navigating to the relevant endpoints. <code>/article</code> and <code>/tag</code>Try creating new tags and articles without selecting relationships. By default, you can’t. However, you’ve noticed that you need to select at least a tag to create an article and at least an article to create a tag.</p>
+
+<p>That’s because those relationships are mandatory in their respective FormTypes. It’s easy to remove them; follow these steps. We’ll also change the displayed label in the <code>select</code> input.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Form/TagType.php</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">$builder</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'label'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'articles'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntityType</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, [</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'class'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Article</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line diff remove"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'choice_label'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'id'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line diff add"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'choice_label'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'title'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'multiple'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line diff add"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'required'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    ])</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+</div>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Form/ArticleType.php</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">$builder</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'title'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'content'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'tags'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntityType</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, [</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'class'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Tag</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line diff remove"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'choice_label'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'id'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line diff add"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'choice_label'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'label'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'multiple'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line diff add"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'required'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    ])</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+</div>
+
+<p>At this point, we can create new articles and tags without manually selecting relationships between them. Give it a try. Does it work? Of course, it does.</p>
+
+<p>Now, let’s edit one of your existing tags to select an article. Click the save button and then go to the edit form. You’ll notice that the previously selected article is no longer selected. <strong>That’s precisely the issue I wanted to discuss today.</strong></p>
+
+<h2 id="the-problem-unidirectional-form-handling">The Problem: Unidirectional Form Handling</h2>
+
+<p>Selecting an article from a tag does not work. However, the opposite path does. That means that our <code>ManyToMany</code> relationship is bidirectional in read operations but unidirectional in write operations.</p>
+
+<p>By default, as stated in this <a href="https://stackoverflow.com/a/77476586">StackOverflow answer</a>, Symfony’s form handling system is adding the relationship by reference, using the methods of <code>ArrayCollection</code>. Because there is an owning and an inverse side in <code>ManyToMany</code>, adding an entity to the inverse side <code>ArrayCollection</code> will have no effect.</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>Adding the relationships by reference is not what we want, so we need to tell Symfony not to do so.</p>
+
+<p>When we look closer to our entities <code>Article::addTag</code> and <code>Tag::addArticle</code> methods, we can see that the inverse side (the Tag entity) is calling <code>Article::addTag</code> to add itself in the article’s <code>ArrayCollection</code> after adding the article in it’s own <code>ArrayCollection</code>.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-highlighted" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Entity/Tag.php</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">public</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> addArticle</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">Article</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> $article)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#D73A49;--shiki-dark:#F97583"> static</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#005CC5;--shiki-dark:#79B8FF">$this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">articles</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">contains</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($article)) {</span></span><span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">        $this</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">articles</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">($article);</span></span><span class="line highlighted"><span style="color:#24292E;--shiki-dark:#E1E4E8">        $article</span><span style="color:#D73A49;--shiki-dark:#F97583">-&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addTag</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">$this</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> $this</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</div>
+
+<p>Thankfully, the FormBuilder has an option to tell the form handling system to use our custom (but auto-generated) <code>add</code>/<code>remove</code> methods. This option is called <code>by_reference</code> and needs to by set to <code>false</code>.</p>
+
+<div class="code-block"><pre class="shiki shiki-themes github-light github-dark has-diff" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># src/Form/TagType.php</span></span><span class="line"></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">$builder</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'label'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span></span><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    -&gt;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">add</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'articles'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntityType</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, [</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'class'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> Article</span><span style="color:#D73A49;--shiki-dark:#F97583">::class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'choice_label'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 'title'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'multiple'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'required'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line diff add"><span style="color:#032F62;--shiki-dark:#9ECBFF">        'by_reference'</span><span style="color:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,  </span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    ])</span></span><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+</div>
+
+<p>And, that’s all, you fixed your forms!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Symfony’s FormBuilder struggles with bidirectional ManyToMany relationships in write operations. To fix this, set the <code>by_reference</code> option to <code>false</code> in the EntityType form field. This instructs Symfony to use the custom <code>add</code>/<code>remove</code> methods generated for the entities, ensuring bidirectional relationships in both read and write operations.</p>
+
+            </article>
+        </div>
+    </div>
+</main>
+<footer class="border-t dark:border-slate-600 mt-auto">
+    <div class="container mx-auto p-2 md:px-4">
+        <p class="text-center text-sm text-slate-600">
+            &copy; d9beuD's Blog 2024
+            —
+            Built with
+            <a href="https://jekyllrb.com" class="text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">Jekyll</a>
+            and hosted on
+            <a href="https://pages.github.com" class="text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">GitHub Pages</a>.
+        </p>
+    </div>
+</footer>
+
+<script src="/assets/scripts/navbar.js"></script>
+
+</body>
+</html>

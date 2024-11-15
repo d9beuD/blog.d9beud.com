@@ -2,10 +2,14 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://blog.d9beud.com/2024/04/19/log-your-users-in-with-google-oauth-and-api-platform.html</loc>
-<lastmod>2024-11-05T19:37:10+01:00</lastmod>
+<lastmod>2024-11-15T09:15:52+01:00</lastmod>
+</url>
+<url>
+<loc>https://blog.d9beud.com/2024/11/14/fix-symfony-many-to-many-relationships-when-using-the-form-builder.html</loc>
+<lastmod>2024-11-15T09:15:52+01:00</lastmod>
 </url>
 <url>
 <loc>https://blog.d9beud.com/</loc>
-<lastmod>2024-11-05T19:37:10+01:00</lastmod>
+<lastmod>2024-11-15T09:15:52+01:00</lastmod>
 </url>
 </urlset>

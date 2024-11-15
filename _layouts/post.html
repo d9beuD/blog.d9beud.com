@@ -45,7 +45,7 @@
             <article class="flex-grow col-span-12 md:col-span-8 lg:col-span-9 order-first md:order-2 mb-8 -mt-32 bg-white dark:bg-slate-900 p-4 rounded-md">
                 <div class="mb-8">
                     <h1 class="text-4xl lg:text-5xl font-bold mb-0">{{ page.title }}</h1>
-                    <small class="text-slate-500 text-sm">{{ page.date | date_to_string }} • {{ page.author.name }}</small>
+                    <small class="text-slate-500 text-sm" title="{{ page.date | date: "%Y-%m-%d %H:%M" }}">{{ page.date | date_to_string }} • {{ page.author.name }}</small>
                 </div>
                 {{ content }}
             </article>
